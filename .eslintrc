@@ -1,0 +1,314 @@
+{
+  "parser": "babel-eslint",
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    }
+  },
+  "env": {
+    // Проект для браузера
+    "browser": true,
+    // Включаем возможности ES6
+    "es6": true,
+    // Добавляем возможности ES2017
+    "es2017": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "js": true
+    }
+  },
+  "extends": [
+    "airbnb", // Базовый набор правил eslint
+    "eslint:recommended", // Отключаем правила из базового набора
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "import"
+  ],
+  //
+  // =========================================================
+  // RULES
+  // =========================================================
+  //
+  "rules": {
+    "no-unused-vars": "warn",
+    "curly": [
+      "error",
+      "all"
+    ],
+    //
+    // =========================================================
+    // OFFs
+    //
+    "arrow-body-style": "off",
+    "no-console": "off",
+    "func-names": "off",
+    "no-process-exit": "off",
+    "object-shorthand": "off",
+    "class-methods-use-this": "off",
+    "no-nested-ternary": "off",
+    "consistent-return": "off",
+    "react/jsx-props-no-spreading": "off",
+    "implicit-arrow-linebreak": "off",
+    //
+    // =========================================================
+    // Quotes
+    //
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true,
+        "allowTemplateLiterals": true
+      }
+    ],
+    "jsx-quotes": [
+      "error",
+      "prefer-single"
+    ],
+    //
+    // =========================================================
+    // New line props
+    //
+    // Objects
+    "object-curly-newline": [
+      "error",
+      {
+        "multiline": true,
+        "minProperties": 3
+      }
+    ],
+    "object-property-newline": [
+      "error",
+      {
+        "allowAllPropertiesOnSameLine": false
+      }
+    ],
+    // Arrays
+    "array-bracket-newline": [
+      "error",
+      {
+        "multiline": true
+      }
+    ],
+    "array-element-newline": [
+      "error",
+      {
+        "multiline": true,
+        "minItems": 3
+      }
+    ],
+    // Functions
+    "function-paren-newline": "off",
+    // "function-paren-newline": [
+    //   "error",
+    //   {
+    //     "minItems": 3
+    //   }
+    // ],
+    "function-call-argument-newline": [
+      "error",
+      "consistent"
+    ],
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
+    //
+    // =========================================================
+    // Indentation
+    //
+    "no-multi-spaces": [
+      "error",
+      {
+        "ignoreEOLComments": true
+      }
+    ],
+    "indent": [
+      2,
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "no-tabs": [
+      "error",
+      {
+        "allowIndentationTabs": false
+      }
+    ],
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
+    "func-call-spacing": [
+      "error",
+      "never"
+    ],
+    "no-var": "error",
+    "prefer-const": "error",
+    "prefer-template": "error",
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true,
+        "allowTernary": true
+      }
+    ],
+    "operator-linebreak": [
+      "error",
+      "after",
+      {
+        "overrides": {
+          "?": "before",
+          ":": "before"
+        }
+      }
+    ],
+    "linebreak-style": [
+      "error",
+      "windows"
+    ],
+    //
+    // =========================================================
+    //	REACT
+    //
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-curly-newline": [
+      "error",
+      "consistent"
+    ],
+    "react/no-multi-comp": [
+      "error",
+      {
+        "ignoreStateless": false
+      }
+    ],
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": false
+      }
+    ],
+    "react/jsx-first-prop-new-line": [
+      "error",
+      "multiline"
+    ],
+    "react/jsx-no-duplicate-props": [
+      "error",
+      {
+        "ignoreCase": false
+      }
+    ],
+    "react/prop-types": "off",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "react/jsx-curly-brace-presence": [
+      "error",
+      {
+        "props": "ignore",
+        "children": "always"
+      }
+    ],
+    "react/jsx-boolean-value": [
+      "error",
+      "never"
+    ],
+    "react/jsx-indent": [
+      "error",
+      2
+    ],
+    "react/jsx-indent-props": [
+      "error",
+      2
+    ],
+    "react/jsx-max-props-per-line": [
+      "error",
+      {
+        "maximum": 1
+      }
+    ],
+    //
+    // =========================================================
+    // import
+    //
+    "import/prefer-default-export": "off",
+    "no-duplicate-imports": "error",
+    "import/no-cycle": [
+      "error",
+      {
+        "maxDepth": 1
+      }
+    ],
+    "import/no-extraneous-dependencies": "off",
+    "import/extensions": [
+      "error",
+      "never"
+    ],
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "order": "asc"
+        },
+        "groups": [
+          [
+            "builtin",
+            "external",
+            "internal"
+          ],
+          [
+            "parent",
+            "sibling",
+            "index",
+            "unknown"
+          ]
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "./style",
+            "group": "unknown",
+            "position": "after"
+          }
+        ],
+        "newlines-between": "always"
+      }
+    ],
+    //
+    // =========================================================
+    // a11y
+    //
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "assert": "nesting"
+      }
+    ]
+  }
+}
