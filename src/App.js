@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 
 import DateBar from './components/DateBar';
 import Layout from './components/Layout';
-import LessonsFeed from './components/LessonsFeed';
+import QuestionsArea from './components/QuestionsArea';
 
 
 // App component with all routing
@@ -14,7 +14,7 @@ export default function App() {
         dateBarRef={dateBarRef}
         gridWidth={3}
       />
-      <LessonsFeed
+      <QuestionsArea
         gridWidth={9}
         dateBarRef={dateBarRef}
       />

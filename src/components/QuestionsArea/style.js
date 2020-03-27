@@ -8,5 +8,6 @@ export default makeStyles(theme => ({
     flexDirection: 'column',
     height: `calc(100vh - 118px)`,
     overflowY: 'auto',
+    padding: theme.spacing(2),
   }),
 }));

@@ -3,12 +3,13 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
+import Question from './Question';
 
 import useStyles from './style';
 
 
-// LessonsFeed component
-export default function LessonsFeed({ gridWidth }) {
+// QuestionsArea component
+export default function QuestionsArea({ gridWidth }) {
   const classes = useStyles();
 
 
@@ -20,7 +21,9 @@ export default function LessonsFeed({ gridWidth }) {
       <Paper
         className={classes.lessonFeed}
         elevation={3}
-      />
+      >
+        <Question />
+      </Paper>
     </Grid>
   );
 }
