@@ -1,11 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(theme => ({
-  calendarMini: {
+  questionList: {
     alignSelf: 'stretch',
     marginRight: theme.spacing(3),
     height: 200,
-    // maxHeight: 'calc(100vh - 118px)',
     overflowY: 'auto',
+    padding: theme.spacing(1),
+
+    '& .MuiButtonBase-root': { display: 'inline' },
   },
+  questionLink: { padding: 5 },
 }));

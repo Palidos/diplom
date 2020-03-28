@@ -5,6 +5,8 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Typography from '@material-ui/core/Typography';
 
+import sampleImage from '../../../assets/loginBackground.jpg';
+
 import useStyles from './style';
 // Question component
 export default function Question() {
@@ -18,15 +20,20 @@ export default function Question() {
 
 
   return (
-    <div>
+    <div className={classes.questionWrapper}>
       <Typography
         noWrap
         className={classes.questionTitle}
       >
         {'Name'}
+        <a id='example'></a>
       </Typography>
 
-
+      <img
+        src={sampleImage}
+        alt='img'
+        className={classes.questionImage}
+      />
       <RadioGroup
         aria-label='gender'
         name='gender1'

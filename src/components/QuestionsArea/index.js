@@ -19,9 +19,12 @@ export default function QuestionsArea({ gridWidth }) {
       xs={gridWidth}
     >
       <Paper
-        className={classes.lessonFeed}
+        className={classes.questionsArea}
         elevation={3}
       >
+        <Question />
+        <Question />
+        <Question />
         <Question />
       </Paper>
     </Grid>

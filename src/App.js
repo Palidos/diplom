@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
-import DateBar from './components/DateBar';
 import Layout from './components/Layout';
+import QuestionList from './components/QuestionList';
 import QuestionsArea from './components/QuestionsArea';
 
 
@@ -10,12 +10,12 @@ export default function App() {
   const dateBarRef = useRef();
   return (
     <Layout>
-      <DateBar
+      <QuestionList
         dateBarRef={dateBarRef}
-        gridWidth={3}
+        gridWidth={2}
       />
       <QuestionsArea
-        gridWidth={9}
+        gridWidth={8}
         dateBarRef={dateBarRef}
       />
     </Layout>
