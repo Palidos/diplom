@@ -100,4 +100,6 @@ export const apiDelete = async (url, data, params, specificHeaders, config) => {
   return response.data;
 };
 
+setHeader('Time-Zone', Intl.DateTimeFormat().resolvedOptions().timeZone);
+
 export default instance;

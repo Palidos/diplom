@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 // LessonsFeed's styles
 export default makeStyles(theme => ({
   questionWrapper: {
-    borderBottom: 'solid 1px',
+    borderTop: 'solid 1px',
     padding: theme.spacing(1, 2, 0, 2),
   },
   questionTitle: { fontWeight: '500' },

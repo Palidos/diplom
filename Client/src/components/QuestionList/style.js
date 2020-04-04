@@ -8,7 +8,14 @@ export default makeStyles(theme => ({
     overflowY: 'auto',
     padding: theme.spacing(1),
 
+
     '& .MuiButtonBase-root': { display: 'inline' },
   },
-  questionLink: { padding: 5 },
+  questionLink: {
+    padding: 5,
+    minWidth: 10,
+    lineHeight: '15px',
+    marginRight: 10,
+    marginBottom: 10,
+  },
 }));

@@ -1,11 +1,12 @@
 import React from 'react';
 
+import sampleImage from 'assets/loginBackground.jpg';
+
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Typography from '@material-ui/core/Typography';
 
-import sampleImage from '../../../assets/loginBackground.jpg';
 
 import useStyles from './style';
 // Question component
