@@ -3,8 +3,6 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import NavList from './NavList';
-
 import useStyles from './style';
 
 // MainMenu component
@@ -23,8 +21,6 @@ export default function MainMenu() {
         {/* Logo */}
         <h1 className={classes.avatar}>{'Student tests'}</h1>
 
-        {/* Navigation */}
-        <NavList />
 
       </Toolbar>
     </AppBar>

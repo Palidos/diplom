@@ -3,6 +3,7 @@
   "settings": {
     "import/resolver": {
       "node": {
+        "moduleDirectory": ["node_modules", "src/"],
         "extensions": [
           ".js",
           ".jsx"
@@ -25,6 +26,7 @@
     }
   },
   "extends": [
+    "react-app",
     "airbnb", // Базовый набор правил eslint
     "eslint:recommended", // Отключаем правила из базового набора
     "plugin:import/errors",
@@ -290,6 +292,11 @@
             "position": "before"
           },
           {
+            "pattern": "@material-ui/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
             "pattern": "./style",
             "group": "unknown",
             "position": "after"
@@ -309,8 +316,6 @@
       {
         "assert": "nesting"
       }
-    ],
-    "jsx-a11y/anchor-has-content":"off",
-    "jsx-a11y/anchor-is-valid": "off"
+    ]
   }
 }

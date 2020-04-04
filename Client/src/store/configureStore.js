@@ -4,14 +4,8 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 
-import * as CoursesStore from './coursesStore';
-import * as DateStore from './dateStore';
-import * as EventStore from './eventsStore';
-import * as GroupsStore from './groupsStore';
-import * as IdentityStore from './identityStore';
 import * as NotificationsStore from './notificationsStore';
-import * as RoomsStore from './roomsStore';
-import * as UserStore from './usersStore';
+import * as QuestionsStore from './questionsStore';
 
 
 export default function configureStore(history, initialState) {
@@ -23,14 +17,9 @@ export default function configureStore(history, initialState) {
 
   // Combine all reducers into one
   const rootReducer = historyFromCreateStore => combineReducers({
-    date: DateStore.reducer,
-    groups: GroupsStore.reducer,
-    identity: IdentityStore.reducer,
-    rooms: RoomsStore.reducer,
-    users: UserStore.reducer,
-    events: EventStore.reducer,
+
     notifications: NotificationsStore.reducer,
-    courses: CoursesStore.reducer,
+    questions: QuestionsStore.reducer,
     router: connectRouter(history),
   });
 

@@ -9,10 +9,10 @@ import sampleImage from '../../../assets/loginBackground.jpg';
 
 import useStyles from './style';
 // Question component
-export default function Question() {
+export default function Question({ question }) {
   const classes = useStyles();
 
-  const [value, setValue] = React.useState('female');
+  const [value, setValue] = React.useState(question.answer1);
 
   const handleChange = event => {
     setValue(event.target.value);
@@ -25,15 +25,16 @@ export default function Question() {
         noWrap
         className={classes.questionTitle}
       >
-        {'Name'}
-        <a id='example'></a>
+        {question.question}
+        {/* <a id='example'></a> */}
       </Typography>
-
-      <img
-        src={sampleImage}
-        alt='img'
-        className={classes.questionImage}
-      />
+      <div className={classes.questionImageContainer}>
+        <img
+          src={sampleImage}
+          alt='img'
+          className={classes.questionImage}
+        />
+      </div>
       <RadioGroup
         aria-label='gender'
         name='gender1'
@@ -42,24 +43,24 @@ export default function Question() {
         className={classes.answersGrid}
       >
         <FormControlLabel
-          value='female'
+          value={question.answer1}
           control={<Radio />}
-          label='Female'
+          label={question.answer1}
         />
         <FormControlLabel
-          value='male'
+          value={question.answer2}
           control={<Radio />}
-          label='Male'
+          label={question.answer2}
         />
         <FormControlLabel
-          value='other'
+          value={question.answer3}
           control={<Radio />}
-          label='Other'
+          label={question.answer3}
         />
         <FormControlLabel
-          value='SOS'
+          value={question.answer4}
           control={<Radio />}
-          label='SOS'
+          label={question.answer4}
         />
       </RadioGroup>
     </div>
