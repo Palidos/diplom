@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-scroll';
+import { NavHashLink as Link } from 'react-router-hash-link';
+
+import { chooseAnswer } from 'store/questionsStore';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -15,9 +17,12 @@ export default function QuestionList({
 }) {
   const classes = useStyles();
   const questions = useSelector(state => state.questions.questions);
+  const answeredQuestions = useSelector(state => state.questions.answeredQuestions);
 
-  const goTo = id => {
-    window.location.hash = id;
+  const isQuestionAnswered = id => {
+    answeredQuestions.map(chosenAnswer =>
+      (Number(Object.keys(chosenAnswer)[0]) === id &&
+    chooseAnswer[id] !== null));
   };
 
   return (
@@ -33,14 +38,27 @@ export default function QuestionList({
           questions
             .sort((a, b) => (a.id > b.id ? 1 : -1))
             .map(question => (
-              <Button
-                onClick={() => goTo(`q${question.id}`)}
-                variant='outlined'
-                color='primary'
-                className={classes.questionLink}
+              <div
+                className={classes.questionButtonWrapper}
+                key={question.id}
               >
-                {question.id}
-              </Button>
+                <Link
+                  to={`/#q${question.id}`}
+                  smooth
+                  offset={50}
+                  duration={500}
+                  className={classes.questionLink}
+                >
+                  <Button
+                    variant='outlined'
+                    color='primary'
+                    className={classes.questionButton}
+                    style={{ backgroundColor: isQuestionAnswered(question.id) ? '#00ff00' : '#ff0000' }}
+                  >
+                    {question.id}
+                  </Button>
+                </Link>
+              </div>
             ))
         }
       </Paper>

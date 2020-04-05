@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Element, Link, scroller,
-} from 'react-scroll';
 
-import { Button } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
@@ -31,7 +27,6 @@ export default function QuestionsArea({ gridWidth }) {
             .sort((a, b) => (a.id > b.id ? 1 : -1))
             .map(question => (
               <Question
-                id={`q${question.id}`}
                 key={question.id}
                 question={question}
               />
