@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 
-// LessonsFeed's styles
+// QuestionsArea's styles
 export default makeStyles(theme => ({
   questionsArea: () => ({
     display: 'flex',
@@ -9,5 +9,6 @@ export default makeStyles(theme => ({
     height: `calc(100vh - 118px)`,
     overflowY: 'auto',
     alignSelf: 'center',
+    marginLeft: '10vw',
   }),
 }));

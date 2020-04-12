@@ -1,67 +1,122 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavHashLink as Link } from 'react-router-hash-link';
 
-import { chooseAnswer } from 'store/questionsStore';
+import { sendTestAnswers } from 'services/api/questionsServices';
 
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Grid,
+  Paper,
+} from '@material-ui/core';
+import green from '@material-ui/core/colors/green';
 
 import useStyles from './style';
 
 // QuestionList component
-export default function QuestionList({
-  gridWidth,
-  dateBarRef,
-}) {
+export default function QuestionList({ gridWidth }) {
   const classes = useStyles();
+  const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
   const questions = useSelector(state => state.questions.questions);
   const answeredQuestions = useSelector(state => state.questions.answeredQuestions);
 
   const isQuestionAnswered = id => {
-    answeredQuestions.map(chosenAnswer =>
-      (Number(Object.keys(chosenAnswer)[0]) === id &&
-    chooseAnswer[id] !== null));
+    return answeredQuestions.find(chosenAnswer =>
+      Number(Object.keys(chosenAnswer)[0]) === id)[id] !== null;
+  };
+
+  const handleOpenSubmitDialog = () => {
+    setIsSubmitDialogOpen(true);
+  };
+
+  const handleCloseSubmitDialog = e => {
+    setIsSubmitDialogOpen(false);
+    if (e.currentTarget.name === 'submit') {
+      sendTestAnswers(answeredQuestions);
+      // const restCourses = courses.filter(({ id }) => id !== selectedCourseId);
+      // restCourses.length === 0
+      //   ? handleAddCourse()
+      //   : dispatch(setStagedCourseId(restCourses[0].id));
+    }
   };
 
   return (
-    <Grid
-      item
-      xs={gridWidth}
-    >
-      <Paper
-        ref={dateBarRef}
-        className={classes.questionList}
+    <>
+      <Grid
+        item
+        xs={gridWidth}
       >
-        {
-          questions
-            .sort((a, b) => (a.id > b.id ? 1 : -1))
-            .map(question => (
-              <div
-                className={classes.questionButtonWrapper}
-                key={question.id}
-              >
-                <Link
-                  to={`/#q${question.id}`}
-                  smooth
-                  offset={50}
-                  duration={500}
-                  className={classes.questionLink}
+        <Paper
+          className={classes.questionList}
+        >
+          {
+            questions
+              .sort((a, b) => (a.id > b.id ? 1 : -1))
+              .map(question => (
+                <div
+                  className={classes.questionButtonWrapper}
+                  key={question.id}
                 >
-                  <Button
-                    variant='outlined'
-                    color='primary'
-                    className={classes.questionButton}
-                    style={{ backgroundColor: isQuestionAnswered(question.id) ? '#00ff00' : '#ff0000' }}
+                  <Link
+                    to={`/#q${question.id}`}
+                    smooth
+                    offset={50}
+                    duration={500}
+                    className={classes.questionLink}
                   >
-                    {question.id}
-                  </Button>
-                </Link>
-              </div>
-            ))
-        }
-      </Paper>
-    </Grid>
+                    <Button
+                      variant='outlined'
+                      color='primary'
+                      className={classes.questionButton}
+                      style={{
+                        backgroundColor: isQuestionAnswered(question.id) &&
+                      green.A400,
+                      }}
+                    >
+                      {question.id}
+                    </Button>
+                  </Link>
+                </div>
+              ))
+          }
+        </Paper>
+        <Button
+          color='primary'
+          variant='contained'
+          className={classes.submitButton}
+          onClick={handleOpenSubmitDialog}
+        >
+          {'Submit'}
+        </Button>
+      </Grid>
+
+      <Dialog
+        open={isSubmitDialogOpen}
+        onClose={handleCloseSubmitDialog}
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
+      >
+        <DialogTitle id='alert-dialog-title'>{`Submit results?`}</DialogTitle>
+        <DialogActions>
+          <Button
+            onClick={handleCloseSubmitDialog}
+            color='primary'
+          >
+            {`Cancel`}
+          </Button>
+          <Button
+            onClick={handleCloseSubmitDialog}
+            name='submit'
+            color='primary'
+            autoFocus
+          >
+            {`Submit`}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 }

@@ -2,9 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(theme => ({
   questionList: {
-    alignSelf: 'stretch',
-    marginRight: theme.spacing(3),
-    height: 200,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, 20px)',
+    gridGap: 10,
     overflowY: 'auto',
     padding: theme.spacing(1),
 
@@ -14,14 +14,14 @@ export default makeStyles(theme => ({
     display: 'inline-block',
     textDecoration: 'none',
   },
-  questionButtonWrapper: {
-    display: 'inline-block',
-    marginRight: 10,
-    marginBottom: 10,
-  },
+  questionButtonWrapper: { display: 'inline-block' },
   questionButton: {
     padding: 5,
     minWidth: 10,
     lineHeight: '15px',
+  },
+  submitButton: {
+    marginTop: theme.spacing(1),
+    width: '100%',
   },
 }));

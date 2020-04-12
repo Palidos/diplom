@@ -41,8 +41,8 @@ export default function Question({ question }) {
         />
       </div>
       <RadioGroup
-        aria-label='gender'
-        name='gender1'
+        aria-label='answers'
+        name='answers'
         value={value}
         onChange={handleChange}
         className={classes.answersGrid}

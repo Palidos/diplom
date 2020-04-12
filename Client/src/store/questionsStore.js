@@ -1,12 +1,14 @@
-import { API_QUESTIONS } from 'services/api/endpoints';
-
-import { createNotification } from './notificationsStore';
-
+import * as questionsServices from '../services/api/questionsServices';
+import {
+  getAsyncTypes,
+  createActionAsync,
+} from './helpers';
 
 // Action Types
-const REQUEST_QUESTIONS = 'REQUEST_QUESTIONS';
-const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS';
 const CHOOSE_ANSWER = 'CHOOSE_ANSWER';
+
+const GET_QUESTIONS = 'GET_QUESTIONS';
+const GET_QUESTIONS_ASYNC = getAsyncTypes(GET_QUESTIONS);
 
 
 // Initial State
@@ -18,12 +20,6 @@ const initialState = {
 
 
 // Actions (dispatchers)
-const requestQuestions = () => ({ type: REQUEST_QUESTIONS });
-
-const receiveQuestions = questions => ({
-  type: RECEIVE_QUESTIONS,
-  payload: questions,
-});
 
 export const chooseAnswer = (questionId, answer) => ({
   type: CHOOSE_ANSWER,
@@ -33,30 +29,25 @@ export const chooseAnswer = (questionId, answer) => ({
   },
 });
 
-export const fetchQuestions = () => async (dispatch, getState) => {
-  try {
-    dispatch(requestQuestions());
-    const response = await fetch(API_QUESTIONS);
-    if (response.ok) {
-      const json = await response.json();
-      dispatch(receiveQuestions(json));
-    }
-  } catch (error) {
-    console.error(error);
-    dispatch(createNotification(error.message, getState().notifications.types.error));
-  }
+export const getTestQuestions = createActionAsync(
+  GET_QUESTIONS, questionsServices.getTestQuestions,
+);
+
+export const fetchQuestions = () => async dispatch => {
+  dispatch(getTestQuestions());
 };
+
 
 // Reducer
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case REQUEST_QUESTIONS:
+    case GET_QUESTIONS_ASYNC.PENDING:
       return {
         ...state,
         isQuestionsLoaded: false,
       };
 
-    case RECEIVE_QUESTIONS:
+    case GET_QUESTIONS_ASYNC.SUCCESS:
       return {
         ...state,
         questions: action.payload,

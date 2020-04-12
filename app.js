@@ -1,8 +1,8 @@
-// const cors = require('cors');
+const cors = require('cors');
 const express = require('express');
 
 const app = express();
-// app.use(cors());
+app.use(cors());
 
 const db = {
   questions: [
@@ -103,14 +103,14 @@ app.get('/feed', (req, res) => {
 
 // @route POST /users
 // @desc  Adds a new user
-app.post('/users', (req, res) => {
-  const { id } = req.body;
-  const { adName } = req.body;
-  db.users.push({
-    id,
-    adName,
-  });
-  return res.sendStatus(201);
+app.post('/api/questions/submit', (req, res) => {
+  // const { id } = req.body;
+  // const { adName } = req.body;
+  // db.users.push({
+  //   id,
+  //   adName,
+  // });
+  return res.sendStatus(200);
 });
 
 // @route DELETE /files/:id

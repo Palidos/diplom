@@ -24,7 +24,7 @@ export default function App() {
         gridWidth={2}
       />
       <QuestionsArea
-        gridWidth={8}
+        gridWidth={7}
         dateBarRef={dateBarRef}
       />
     </Layout>

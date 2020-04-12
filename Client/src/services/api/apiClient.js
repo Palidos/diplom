@@ -4,7 +4,6 @@ const LOCATION_HEADER = 'location';
 const commonHeaders = {};
 
 const instance = axios.create({
-  withCredentials: true,
   headers: commonHeaders,
 });
 
