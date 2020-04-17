@@ -3,56 +3,96 @@ const express = require('express');
 
 const app = express();
 app.use(cors());
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 const db = {
   questions: [
     {
       id: 1,
       question: 'asdasdas',
-      answer1: '111111',
-      answer2: '222222',
-      answer3: '333333',
-      answer4: '444444',
+      answers: [
+        '111111',
+        '222222',
+        '333333',
+        '444444',
+      ],
     },
     {
       id: 2,
       question: 'kkkkkkk',
-      answer1: '111111',
-      answer2: '222222',
-      answer3: '333333',
-      answer4: '444444',
+      answers: [
+        '111111',
+        '222222',
+        '333333',
+        '444444',
+      ],
     },
     {
       id: 3,
       question: 'wwwwwwwwwwwww',
-      answer1: '111111',
-      answer2: '222222',
-      answer3: '333333',
-      answer4: '444444',
+      answers: [
+        '111111',
+        '222222',
+        '333333',
+        '444444',
+      ],
     },
     {
       id: 4,
       question: 'qqqqqqqqq',
-      answer1: '111111',
-      answer2: '222222',
-      answer3: '333333',
-      answer4: '444444',
+      answers: [
+        '111111',
+        '222222',
+        '333333',
+        '444444',
+      ],
     },
     {
       id: 5,
       question: 'ooooooooooo',
-      answer1: '111111',
-      answer2: '222222',
-      answer3: '333333',
-      answer4: '444444',
+      answers: [
+        '111111',
+        '222222',
+        '333333',
+        '444444',
+      ],
     },
     {
       id: 6,
       question: '123123123123123123123123123123123123123123',
-      answer1: '111111',
-      answer2: '222222',
-      answer3: '333333',
-      answer4: '444444',
+      answers: [
+        '111111',
+        '222222',
+        '333333',
+        '444444',
+      ],
+    },
+  ],
+  answers: [
+    {
+      id: 1,
+      answerId: 1,
+    },
+    {
+      id: 2,
+      answerId: 0,
+    },
+    {
+      id: 3,
+      answerId: 3,
+    },
+    {
+      id: 4,
+      answerId: 0,
+    },
+    {
+      id: 5,
+      answerId: 2,
+    },
+    {
+      id: 6,
+      answerId: 2,
     },
   ],
 };
@@ -90,27 +130,18 @@ app.get('/user/:id', (req, res) => {
   return res.status(200).json(db.users.find(user => user.id === req.params.id));
 });
 
-// @route GET /feed
-// @desc  Display feed
-app.get('/feed', (req, res) => {
-  if (!db.feed.length) {
-    return res.status(404).json({ err: `No feed` });
-  }
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
-  return res.status(200).json(db.feed);
-});
-
 // @route POST /users
 // @desc  Adds a new user
 app.post('/api/questions/submit', (req, res) => {
-  // const { id } = req.body;
-  // const { adName } = req.body;
-  // db.users.push({
-  //   id,
-  //   adName,
-  // });
-  return res.sendStatus(200);
+  const clientAnswers = req.body;
+  const rightAnswers = clientAnswers.map(answer => ({
+    id: answer.id,
+    correct: answer.answerId === db.answers.find(({ id }) => id === answer.id).answerId,
+  }));
+
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
+  return res.json(rightAnswers).sendStatus(200);
 });
 
 // @route DELETE /files/:id

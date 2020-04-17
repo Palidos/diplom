@@ -3,13 +3,9 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "moduleDirectory": [
-          "node_modules",
-          "src/"
-        ],
+        "moduleDirectory": ["node_modules", "src/"],
         "extensions": [
-          ".js",
-          ".jsx"
+          ".js"
         ]
       }
     }
@@ -18,25 +14,21 @@
     "node": true,
     "browser": true,
     "es6": true
-    // "es2017": true
   },
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true,
       "js": true
     },
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2020
   },
   "extends": [
-    "react-app",
     "airbnb", // Базовый набор правил eslint
     "eslint:recommended", // Отключаем правила из базового набора
     "plugin:import/errors",
     "plugin:import/warnings"
   ],
   "plugins": [
-    "react",
-    "react-hooks",
     "import"
   ],
   //
@@ -182,74 +174,6 @@
     "linebreak-style": [
       "error",
       "windows"
-    ],
-    //
-    // =========================================================
-    //	REACT
-    //
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "react/jsx-curly-newline": [
-      "error",
-      "consistent"
-    ],
-    "react/no-multi-comp": [
-      "error",
-      {
-        "ignoreStateless": false
-      }
-    ],
-    "react/self-closing-comp": [
-      "error",
-      {
-        "component": true,
-        "html": false
-      }
-    ],
-    "react/jsx-first-prop-new-line": [
-      "error",
-      "multiline"
-    ],
-    "react/jsx-no-duplicate-props": [
-      "error",
-      {
-        "ignoreCase": false
-      }
-    ],
-    "react/prop-types": "off",
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
-      }
-    ],
-    "react/jsx-curly-brace-presence": [
-      "error",
-      {
-        "props": "ignore",
-        "children": "always"
-      }
-    ],
-    "react/jsx-boolean-value": [
-      "error",
-      "never"
-    ],
-    "react/jsx-indent": [
-      "error",
-      2
-    ],
-    "react/jsx-indent-props": [
-      "error",
-      2
-    ],
-    "react/jsx-max-props-per-line": [
-      "error",
-      {
-        "maximum": 1
-      }
     ],
     //
     // =========================================================

@@ -16,11 +16,10 @@ export default function Question({ question }) {
   const [value, setValue] = useState(null);
   const dispatch = useDispatch();
 
-  const handleChange = event => {
-    setValue(event.target.value);
-    dispatch(chooseAnswer(question.id, event.target.value));
+  const handleChange = e => {
+    setValue(e.target.value);
+    dispatch(chooseAnswer(question.id, question.answers.indexOf(e.target.value)));
   };
-
 
   return (
     <div
@@ -47,26 +46,17 @@ export default function Question({ question }) {
         onChange={handleChange}
         className={classes.answersGrid}
       >
-        <FormControlLabel
-          value={question.answer1}
-          control={<Radio />}
-          label={question.answer1}
-        />
-        <FormControlLabel
-          value={question.answer2}
-          control={<Radio />}
-          label={question.answer2}
-        />
-        <FormControlLabel
-          value={question.answer3}
-          control={<Radio />}
-          label={question.answer3}
-        />
-        <FormControlLabel
-          value={question.answer4}
-          control={<Radio />}
-          label={question.answer4}
-        />
+        {
+          question.answers.map(answer => (
+            <FormControlLabel
+              key={answer}
+              value={answer}
+              control={<Radio />}
+              label={answer}
+            />
+          ))
+        }
+
       </RadioGroup>
     </div>
   );

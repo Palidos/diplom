@@ -19,23 +19,24 @@ import useStyles from './style';
 // QuestionList component
 export default function QuestionList({ gridWidth }) {
   const classes = useStyles();
-  const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
   const questions = useSelector(state => state.questions.questions);
   const answeredQuestions = useSelector(state => state.questions.answeredQuestions);
+  const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
+  const [testAnswers, setTestAnswers] = useState([]);
 
   const isQuestionAnswered = id => {
     return answeredQuestions.find(chosenAnswer =>
-      Number(Object.keys(chosenAnswer)[0]) === id)[id] !== null;
+      chosenAnswer.id === id).answer !== null;
   };
 
   const handleOpenSubmitDialog = () => {
     setIsSubmitDialogOpen(true);
   };
 
-  const handleCloseSubmitDialog = e => {
+  const handleCloseSubmitDialog = async e => {
     setIsSubmitDialogOpen(false);
     if (e.currentTarget.name === 'submit') {
-      sendTestAnswers(answeredQuestions);
+      setTestAnswers(await sendTestAnswers(answeredQuestions));
       // const restCourses = courses.filter(({ id }) => id !== selectedCourseId);
       // restCourses.length === 0
       //   ? handleAddCourse()

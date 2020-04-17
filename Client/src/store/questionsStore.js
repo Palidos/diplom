@@ -52,16 +52,24 @@ export const reducer = (state = initialState, action) => {
         ...state,
         questions: action.payload,
         isQuestionsLoaded: true,
-        answeredQuestions: action.payload.map(question => ({ [question.id]: null })),
+        answeredQuestions: action.payload.map(question => ({
+          id: question.id,
+          answer: null,
+        })),
       };
 
     case CHOOSE_ANSWER:
       return {
         ...state,
         answeredQuestions: state.answeredQuestions.map(chosenAnswer =>
-          (Number(Object.keys(chosenAnswer)[0]) === action.payload.questionId
-            ? { [action.payload.questionId]: action.payload.answer }
-            : chosenAnswer),
+          (
+            chosenAnswer.id === action.payload.questionId
+              ? {
+                id: action.payload.questionId,
+                answerId: action.payload.answer,
+              }
+              : chosenAnswer
+          ),
         ),
       };
 
