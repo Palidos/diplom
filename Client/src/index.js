@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/styles';
 import { ConnectedRouter } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/styles';
 
 import App from './App';
 import configureStore from './store/configureStore';

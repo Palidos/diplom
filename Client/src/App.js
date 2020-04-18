@@ -1,16 +1,15 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Route } from 'react-router-dom';
 
+import Layout from 'components/Layout';
+import ResultPage from 'components/ResultPage';
+import TestPage from 'components/TestPage';
 import { fetchQuestions } from 'store/questionsStore';
-
-import Layout from './components/Layout';
-import QuestionList from './components/QuestionList';
-import QuestionsArea from './components/QuestionsArea';
 
 
 // App component with all routing
 export default function App() {
-  const dateBarRef = useRef();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,13 +18,13 @@ export default function App() {
 
   return (
     <Layout>
-      <QuestionList
-        dateBarRef={dateBarRef}
-        gridWidth={2}
+      <Route
+        path='/test'
+        component={TestPage}
       />
-      <QuestionsArea
-        gridWidth={7}
-        dateBarRef={dateBarRef}
+      <Route
+        path='/results'
+        component={ResultPage}
       />
     </Layout>
   );

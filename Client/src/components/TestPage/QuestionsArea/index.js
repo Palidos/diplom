@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
+
+import CircularProgress from 'components/CircularProgress';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -12,6 +14,7 @@ import useStyles from './style';
 export default function QuestionsArea({ gridWidth }) {
   const classes = useStyles();
   const questions = useSelector(state => state.questions.questions);
+  const isQuestionsLoaded = useSelector(state => state.questions.isQuestionsLoaded);
 
   return (
     <Grid
@@ -23,14 +26,16 @@ export default function QuestionsArea({ gridWidth }) {
         elevation={3}
       >
         {
-          questions
-            .sort((a, b) => (a.id > b.id ? 1 : -1))
-            .map(question => (
-              <Question
-                key={question.id}
-                question={question}
-              />
-            ))
+          isQuestionsLoaded
+            ? questions
+              .sort((a, b) => (a.id > b.id ? 1 : -1))
+              .map(question => (
+                <Question
+                  key={question.id}
+                  question={question}
+                />
+              ))
+            : <CircularProgress />
         }
       </Paper>
     </Grid>
