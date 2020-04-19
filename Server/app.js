@@ -136,11 +136,8 @@ app.post('/api/questions/submit', (req, res) => {
   const clientAnswers = req.body;
   const rightAnswers = clientAnswers.map(answer => ({
     id: answer.id,
-    correct: answer.answerId === db.answers.find(({ id }) => id === answer.id).answerId,
+    correctAnswerId: db.answers.find(({ id }) => id === answer.id).answerId,
   }));
-
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'origin, content-type, accept');
   return res.json(rightAnswers).sendStatus(200);
 });
 

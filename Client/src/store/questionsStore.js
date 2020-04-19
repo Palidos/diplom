@@ -26,11 +26,11 @@ const initialState = {
 
 // Actions (dispatchers)
 
-export const chooseAnswer = (questionId, answer) => ({
+export const chooseAnswer = (id, answerId) => ({
   type: CHOOSE_ANSWER,
   payload: {
-    questionId,
-    answer,
+    id,
+    answerId,
   },
 });
 
@@ -56,7 +56,6 @@ export const submitAnswers = answers => async dispatch => {
 // Reducer
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case SUBMIT_ANSWERS_ASYNC.PENDING:
     case GET_QUESTIONS_ASYNC.PENDING:
       return {
         ...state,
@@ -70,7 +69,7 @@ export const reducer = (state = initialState, action) => {
         isQuestionsLoaded: true,
         answeredQuestions: action.payload.map(question => ({
           id: question.id,
-          answer: null,
+          answerId: null,
         })),
       };
 
@@ -85,10 +84,10 @@ export const reducer = (state = initialState, action) => {
         ...state,
         answeredQuestions: state.answeredQuestions.map(chosenAnswer =>
           (
-            chosenAnswer.id === action.payload.questionId
+            chosenAnswer.id === action.payload.id
               ? {
-                id: action.payload.questionId,
-                answerId: action.payload.answer,
+                id: action.payload.id,
+                answerId: action.payload.answerId,
               }
               : chosenAnswer
           ),

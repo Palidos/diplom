@@ -11,7 +11,6 @@ import { ThemeProvider } from '@material-ui/styles';
 import App from './App';
 import configureStore from './store/configureStore';
 import theme from './theme';
-import 'typeface-roboto';
 
 
 // Create browser history to use in the Redux store

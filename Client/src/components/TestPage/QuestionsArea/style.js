@@ -10,5 +10,6 @@ export default makeStyles(theme => ({
     overflowY: 'auto',
     alignSelf: 'center',
     marginLeft: '10vw',
+    '& > div:not(:first-child)': { borderTop: 'solid 1px' },
   }),
 }));

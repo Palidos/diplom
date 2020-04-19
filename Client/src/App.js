@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Layout from 'components/Layout';
 import ResultPage from 'components/ResultPage';
@@ -18,14 +18,16 @@ export default function App() {
 
   return (
     <Layout>
-      <Route
-        path='/test'
-        component={TestPage}
-      />
-      <Route
-        path='/results'
-        component={ResultPage}
-      />
+      <Switch>
+        <Route
+          path='/test'
+          component={TestPage}
+        />
+        <Route
+          path='/results'
+          component={TestPage}
+        />
+      </Switch>
     </Layout>
   );
 }
