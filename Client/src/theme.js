@@ -1,5 +1,10 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
+export const colors = {
+  answered: '#ffeb3b', // yellow
+  correct: '#00e676', // green
+  wrong: '#f44336', // red
+};
 // A custom theme for this app
 export default createMuiTheme({
   palette: {
@@ -32,15 +37,9 @@ export default createMuiTheme({
       quarter: 'rgba(59, 197, 195)',
     },
     notification: {
-      main: 'rgb(39, 174, 96)', // green
-      success: 'rgb(39, 174, 96)', // green
-      now: 'rgb(39, 174, 96)', // green
-      test: 'rgb(0, 105, 220)', // dark blue
-      exam: 'rgb(222, 72, 64)', // red
-      countdown: 'rgb(52, 152, 219)', // blue
-      error: 'rgb(222, 72, 64)', // red
-      late: 'rgb(243, 156, 18)', // orange
-      missed: 'rgb(204, 204, 204)', // grey
+      answered: 'rgb(39, 174, 96)', // green
+      correct: 'rgb(39, 174, 96)', // green
+      wrong: 'rgb(222, 72, 64)', // red
     },
     shadow: {
       paper: '0 2px 8px 0 rgba(205, 205, 210, 0.5)',

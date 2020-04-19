@@ -5,6 +5,7 @@ import { NavHashLink as Link } from 'react-router-hash-link';
 
 import CircularProgress from 'components/CircularProgress';
 import { submitAnswers } from 'store/questionsStore';
+import { colors } from 'theme';
 
 import {
   Button,
@@ -14,25 +15,34 @@ import {
   Grid,
   Paper,
 } from '@material-ui/core';
-import green from '@material-ui/core/colors/green';
 
 import useStyles from './style';
 
 // QuestionList component
 export default function QuestionList({ gridWidth }) {
-  const classes = useStyles();
   const questions = useSelector(state => state.questions.questions);
+  const rightAnswers = useSelector(state => state.questions.rightAnswers);
   const isQuestionsLoaded = useSelector(state => state.questions.isQuestionsLoaded);
   const answeredQuestions = useSelector(state => state.questions.answeredQuestions);
   const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [testAnswers, setTestAnswers] = useState([]);
+  const classes = useStyles({ isQuestionsLoaded });
   const dispatch = useDispatch();
   const history = useHistory();
+  const pathname = history.location.pathname.split('/')[1];
 
   const isQuestionAnswered = id => {
     return answeredQuestions.find(chosenAnswer =>
-      chosenAnswer.id === id).answer !== null;
+      chosenAnswer.id === id).answerId !== null;
+  };
+
+  const bgColor = qId => {
+    if (pathname === 'results') {
+      return rightAnswers.find(({ id }) =>
+        id === qId).correctAnswerId === answeredQuestions.find(({ id }) => id === qId).answerId
+        ? colors.correct : colors.wrong;
+    }
+    return isQuestionAnswered(qId) && colors.answered;
   };
 
   const handleOpenSubmitDialog = () => {
@@ -71,7 +81,7 @@ export default function QuestionList({ gridWidth }) {
                     key={question.id}
                   >
                     <Link
-                      to={`/#q${question.id}`}
+                      to={pathname === 'results' ? `/results/#q${question.id}` : `/test/#q${question.id}`}
                       smooth
                       offset={50}
                       duration={500}
@@ -81,12 +91,9 @@ export default function QuestionList({ gridWidth }) {
                         variant='outlined'
                         color='primary'
                         className={classes.questionButton}
-                        style={{
-                          backgroundColor: isQuestionAnswered(question.id) &&
-                      green.A400,
-                        }}
+                        style={{ backgroundColor: bgColor(question.id) }}
                       >
-                        {question.id}
+                        {question.id + 1}
                       </Button>
                     </Link>
                   </div>
@@ -94,15 +101,18 @@ export default function QuestionList({ gridWidth }) {
               : <CircularProgress />
           }
         </Paper>
-        <Button
-          color='primary'
-          variant='contained'
-          className={classes.submitButton}
-          onClick={handleOpenSubmitDialog}
-          // disabled={isDisabled}
-        >
-          {'Submit'}
-        </Button>
+        {
+          pathname === 'test' && (
+            <Button
+              color='primary'
+              variant='contained'
+              className={classes.submitButton}
+              onClick={handleOpenSubmitDialog}
+            >
+              {'Submit'}
+            </Button>
+          )
+        }
       </Grid>
 
       <Dialog

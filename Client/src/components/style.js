@@ -4,7 +4,9 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 
 // useStyles
 export default makeStyles(theme => ({
+  '@import': ['url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap)'],
   root: {
+    fontFamily: 'Roboto, sans-serif',
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#efeff4',
@@ -14,7 +16,7 @@ export default makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
   },
   '@global': {  // Scrollbar styling
     '::-webkit-scrollbar': {

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import sampleImage from 'assets/loginBackground.jpg';
 import { chooseAnswer } from 'store/questionsStore';
+import { colors } from 'theme';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
@@ -14,6 +16,10 @@ import useStyles from './style';
 export default function Question({ question }) {
   const classes = useStyles();
   const [value, setValue] = useState(null);
+  const rightAnswers = useSelector(state => state.questions.rightAnswers);
+  const answeredQuestions = useSelector(state => state.questions.answeredQuestions);
+  const history = useHistory();
+  const pathname = history.location.pathname.split('/')[1];
   const dispatch = useDispatch();
 
   const handleChange = e => {
@@ -30,7 +36,7 @@ export default function Question({ question }) {
         noWrap
         className={classes.questionTitle}
       >
-        {`${question.id}. ${question.question}`}
+        {`${question.id + 1}. ${question.question}`}
       </Typography>
       <div className={classes.questionImageContainer}>
         <img
@@ -39,25 +45,53 @@ export default function Question({ question }) {
           className={classes.questionImage}
         />
       </div>
-      <RadioGroup
-        aria-label='answers'
-        name='answers'
-        value={value}
-        onChange={handleChange}
-        className={classes.answersGrid}
-      >
-        {
-          question.answers.map(answer => (
-            <FormControlLabel
-              key={answer}
-              value={answer}
-              control={<Radio />}
-              label={answer}
-            />
-          ))
-        }
-
-      </RadioGroup>
+      {
+        pathname === 'results'
+          ? (
+            <div
+              className={classes.answersGrid}
+            >
+              {
+                question.answers.map((answer, index) => (
+                  <Typography
+                    key={answer}
+                    className={classes.answer}
+                    style={{
+                      color: rightAnswers.find(({ id }) =>
+                        id === question.id).correctAnswerId === index
+                        ? colors.correct
+                        : answeredQuestions.find(({ id }) => id === question.id)
+                          .answerId === index && colors.wrong,
+                    }}
+                  >
+                    {answer}
+                  </Typography>
+                ))
+              }
+            </div>
+          )
+          : (
+            <RadioGroup
+              aria-label='answers'
+              name='answers'
+              value={value}
+              onChange={handleChange}
+              className={classes.answersGrid}
+            >
+              {
+                question.answers.map(answer => (
+                  <FormControlLabel
+                    key={answer}
+                    value={answer}
+                    control={<Radio />}
+                    label={answer}
+                    className={classes.answer}
+                  />
+                ))
+              }
+            </RadioGroup>
+          )
+      }
     </div>
   );
 }

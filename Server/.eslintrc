@@ -17,13 +17,12 @@
   },
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true,
       "js": true
     },
     "ecmaVersion": 2020
   },
   "extends": [
-    "airbnb", // Базовый набор правил eslint
+    "airbnb-base", // Базовый набор правил eslint
     "eslint:recommended", // Отключаем правила из базового набора
     "plugin:import/errors",
     "plugin:import/warnings"
@@ -54,7 +53,6 @@
     "class-methods-use-this": "off",
     "no-nested-ternary": "off",
     "consistent-return": "off",
-    "react/jsx-props-no-spreading": "off",
     "implicit-arrow-linebreak": "off",
     //
     // =========================================================
@@ -237,11 +235,5 @@
     //
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-static-element-interactions": "off",
-    "jsx-a11y/label-has-associated-control": [
-      2,
-      {
-        "assert": "nesting"
-      }
-    ]
   }
 }
