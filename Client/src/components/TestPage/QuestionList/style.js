@@ -1,15 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(theme => ({
-  questionList: {
-    display: 'grid',
+  questionList: ({ isQuestionsLoaded }) => ({
+    display: isQuestionsLoaded ? 'grid' : 'block',
     gridTemplateColumns: 'repeat(auto-fit, 20px)',
     gridGap: 10,
     overflowY: 'auto',
     padding: theme.spacing(1),
 
     '& .MuiButtonBase-root': { display: 'inline' },
-  },
+  }),
   questionLink: {
     display: 'inline-block',
     textDecoration: 'none',

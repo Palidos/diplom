@@ -20,13 +20,13 @@ import useStyles from './style';
 
 // QuestionList component
 export default function QuestionList({ gridWidth }) {
-  const classes = useStyles();
   const questions = useSelector(state => state.questions.questions);
   const rightAnswers = useSelector(state => state.questions.rightAnswers);
   const isQuestionsLoaded = useSelector(state => state.questions.isQuestionsLoaded);
   const answeredQuestions = useSelector(state => state.questions.answeredQuestions);
   const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const classes = useStyles({ isQuestionsLoaded });
   const dispatch = useDispatch();
   const history = useHistory();
   const pathname = history.location.pathname.split('/')[1];
@@ -93,7 +93,7 @@ export default function QuestionList({ gridWidth }) {
                         className={classes.questionButton}
                         style={{ backgroundColor: bgColor(question.id) }}
                       >
-                        {question.id}
+                        {question.id + 1}
                       </Button>
                     </Link>
                   </div>

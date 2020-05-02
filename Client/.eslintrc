@@ -62,6 +62,7 @@
     "consistent-return": "off",
     "react/jsx-props-no-spreading": "off",
     "implicit-arrow-linebreak": "off",
+    "no-underscore-dangle": "off",
     //
     // =========================================================
     // Quotes

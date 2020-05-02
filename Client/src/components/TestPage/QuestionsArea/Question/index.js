@@ -36,7 +36,7 @@ export default function Question({ question }) {
         noWrap
         className={classes.questionTitle}
       >
-        {`${question.id}. ${question.question}`}
+        {`${question.id + 1}. ${question.question}`}
       </Typography>
       <div className={classes.questionImageContainer}>
         <img
