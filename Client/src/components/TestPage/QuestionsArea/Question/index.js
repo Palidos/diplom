@@ -36,14 +36,23 @@ export default function Question({ question }) {
         noWrap
         className={classes.questionTitle}
       >
-        {`${question.id + 1}. ${question.question}`}
+        {`№${question.id + 1}.`}
+      </Typography>
+      <Typography
+        className={classes.questionTitle}
+      >
+        {`${question.question}`}
       </Typography>
       <div className={classes.questionImageContainer}>
-        <img
-          src={sampleImage}
-          alt='img'
-          className={classes.questionImage}
-        />
+        {
+          question.src && (
+            <img
+              src={question.src}
+              alt='img'
+              className={classes.questionImage}
+            />
+          )
+        }
       </div>
       {
         pathname === 'results'

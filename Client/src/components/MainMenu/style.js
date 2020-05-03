@@ -18,7 +18,7 @@ export default makeStyles(theme => ({
     },
   }),
   menuButton: { marginRight: theme.spacing(2) },
-  avatar: {
+  title: {
     order: 1,
     marginLeft: theme.spacing(1),
     textAlign: 'left',

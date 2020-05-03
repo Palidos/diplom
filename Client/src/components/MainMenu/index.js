@@ -19,7 +19,7 @@ export default function MainMenu() {
       <Toolbar className={classes.toolBar}>
 
         {/* Logo */}
-        <h1 className={classes.avatar}>{'Student tests'}</h1>
+        <h1 className={classes.title}>{'Smart tests'}</h1>
 
 
       </Toolbar>

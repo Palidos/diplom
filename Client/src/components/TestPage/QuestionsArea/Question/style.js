@@ -9,7 +9,7 @@ export default makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
   },
-  questionImage: { width: 200 },
+  // questionImage: { width: 200 },
   answersGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',

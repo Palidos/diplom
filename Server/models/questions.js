@@ -1,7 +1,13 @@
 const { Schema, model } = require('mongoose');
 
 const questionsSchema = new Schema({
-  _id: Number,
+  id: Number,
+  questionType: {
+    type: Number,
+    required: true,
+  },
+  inlineImage: [String],
+  src: String,
   question: {
     type: String,
     required: true,
