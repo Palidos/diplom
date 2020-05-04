@@ -1,21 +1,18 @@
-import AuthHelper from './modelsRealisation/authHelper';
-import * as DateLesson from './modelsRealisation/dateLessonCalculation';
-import DaysOfWeek from './modelsRealisation/daysOfWeek';
-import EditGroupModel from './modelsRealisation/editGroupModel';
-import GroupLevels from './modelsRealisation/groupLevels';
-import GroupStatuses from './modelsRealisation/groupStatuses';
-import IdentityModel from './modelsRealisation/identityModel';
-import OperateDate from './modelsRealisation/operateDate';
-import RoomStatuses from './modelsRealisation/roomStatuses';
+import { colors } from 'theme';
 
-export {
-  AuthHelper,
-  DaysOfWeek,
-  EditGroupModel,
-  GroupLevels,
-  GroupStatuses,
-  IdentityModel,
-  OperateDate,
-  RoomStatuses,
-  DateLesson,
+export const backgroundColor = (qId, path, rightAnswers, answeredQuestions, isQuestionAnswered) => {
+  if (path === 'results') {
+    return rightAnswers.find(({ questionId }) =>
+      questionId === qId).answers[0] ===
+    answeredQuestions.find(({ questionId }) =>
+      questionId === qId).answer
+      ? colors.correct : colors.wrong;
+  }
+  return isQuestionAnswered(qId) && colors.answered;
+};
+
+export const answerColor = (qId, rightAnswers, clientAnswer) => {
+  return rightAnswers.find(({ questionId }) =>
+    questionId === qId).answers[0] === clientAnswer
+    ? colors.correct : colors.wrong;
 };

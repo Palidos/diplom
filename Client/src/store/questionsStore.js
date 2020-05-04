@@ -26,11 +26,11 @@ const initialState = {
 
 // Actions (dispatchers)
 
-export const chooseAnswer = (id, answerId) => ({
+export const chooseAnswer = (questionId, answer) => ({
   type: CHOOSE_ANSWER,
   payload: {
-    id,
-    answerId,
+    questionId,
+    answer,
   },
 });
 
@@ -68,8 +68,8 @@ export const reducer = (state = initialState, action) => {
         questions: action.payload,
         isQuestionsLoaded: true,
         answeredQuestions: action.payload.map(question => ({
-          id: question.id,
-          answerId: null,
+          questionId: question.id,
+          answer: null,
         })),
       };
 
@@ -84,10 +84,10 @@ export const reducer = (state = initialState, action) => {
         ...state,
         answeredQuestions: state.answeredQuestions.map(chosenAnswer =>
           (
-            chosenAnswer.id === action.payload.id
+            chosenAnswer.questionId === action.payload.questionId
               ? {
-                id: action.payload.id,
-                answerId: action.payload.answerId,
+                questionId: action.payload.questionId,
+                answer: action.payload.answer,
               }
               : chosenAnswer
           ),
