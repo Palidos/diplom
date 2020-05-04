@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose');
 
 const answersSchema = new Schema({
-  id: Number,
-  answerId: Number,
+  questionId: Number,
+  answers: [String],
 });
 
 module.exports = model('answers', answersSchema);

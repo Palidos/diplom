@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { NavHashLink as Link } from 'react-router-hash-link';
 
 import CircularProgress from 'components/CircularProgress';
+import { backgroundColor } from 'models';
 import { submitAnswers } from 'store/questionsStore';
-import { colors } from 'theme';
 
 import {
   Button,
@@ -31,18 +31,9 @@ export default function QuestionList({ gridWidth }) {
   const history = useHistory();
   const pathname = history.location.pathname.split('/')[1];
 
-  const isQuestionAnswered = id => {
+  const isQuestionAnswered = questionId => {
     return answeredQuestions.find(chosenAnswer =>
-      chosenAnswer.id === id).answerId !== null;
-  };
-
-  const bgColor = qId => {
-    if (pathname === 'results') {
-      return rightAnswers.find(({ id }) =>
-        id === qId).correctAnswerId === answeredQuestions.find(({ id }) => id === qId).answerId
-        ? colors.correct : colors.wrong;
-    }
-    return isQuestionAnswered(qId) && colors.answered;
+      chosenAnswer.questionId === questionId).answer !== null;
   };
 
   const handleOpenSubmitDialog = () => {
@@ -91,7 +82,11 @@ export default function QuestionList({ gridWidth }) {
                         variant='outlined'
                         color='primary'
                         className={classes.questionButton}
-                        style={{ backgroundColor: bgColor(question.id) }}
+                        style={{
+                          backgroundColor:
+                          // eslint-disable-next-line max-len
+                          backgroundColor(question.id, pathname, rightAnswers, answeredQuestions, isQuestionAnswered),
+                        }}
                       >
                         {question.id + 1}
                       </Button>
