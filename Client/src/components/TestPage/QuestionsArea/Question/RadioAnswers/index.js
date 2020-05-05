@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 
 import { answerColor } from 'models';
 import { chooseAnswer } from 'store/questionsStore';
-import { colors } from 'theme';
 
 import {
   FormControlLabel,
@@ -17,15 +16,14 @@ import useStyles from './style';
 // RadioAnswers component
 export default function RadioAnswers({ question }) {
   const classes = useStyles();
-  const [value, setValue] = useState(null);
+  const [chosenAnswer, setChosenAnswer] = useState(null);
   const rightAnswers = useSelector(state => state.questions.rightAnswers);
-  const answeredQuestions = useSelector(state => state.questions.answeredQuestions);
   const history = useHistory();
   const pathname = history.location.pathname.split('/')[1];
   const dispatch = useDispatch();
 
   const handleChange = e => {
-    setValue(e.target.value);
+    setChosenAnswer(e.target.value);
     dispatch(chooseAnswer(question.id, e.target.value));
   };
 
@@ -43,8 +41,11 @@ export default function RadioAnswers({ question }) {
                     key={answer}
                     className={classes.answer}
                     style={{
-                      color:
-                      answerColor(question.id, rightAnswers, answer),
+                      color: // use color only on a chosen answer or on a right answer
+                        (chosenAnswer === answer ||
+                          rightAnswers.find(({ questionId }) =>
+                            questionId === question.id).answers[0] === answer) &&
+                        answerColor(question.id, rightAnswers, answer),
                     }}
                   >
                     {answer}
@@ -57,7 +58,7 @@ export default function RadioAnswers({ question }) {
             <RadioGroup
               aria-label='answers'
               name='answers'
-              value={value}
+              value={chosenAnswer}
               onChange={handleChange}
               className={classes.answersGrid}
             >

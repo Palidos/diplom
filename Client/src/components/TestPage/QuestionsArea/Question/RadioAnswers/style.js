@@ -14,5 +14,6 @@ export default makeStyles(theme => ({
     fontWeight: 500,
     height: 42,
     '& .MuiTypography-root': { fontWeight: 500 },
+    '& svg': { color: theme.palette.primary.main },
   },
 }));

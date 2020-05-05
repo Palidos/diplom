@@ -3,11 +3,16 @@ import { makeStyles } from '@material-ui/core/styles';
 
 // TextFieldAnswers's styles
 export default makeStyles(theme => ({
-  answer: {
+  textFieldWrapper: {
     display: 'flex',
+    justifyContent: 'center',
+  },
+  answer: {
     fontWeight: 500,
-    marginTop: theme.spacing(2),
-    height: 42,
+    margin: theme.spacing(2, 0),
+    width: '60%',
     '& .MuiTypography-root': { fontWeight: 500 },
+    '& .MuiOutlinedInput-input': { padding: theme.spacing(1) },
+    '& fieldset': { borderColor: theme.palette.primary.main },
   },
 }));

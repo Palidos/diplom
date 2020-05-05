@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import { answerColor } from 'models';
 import { chooseAnswer } from 'store/questionsStore';
-import { colors } from 'theme';
 
 import {
   Checkbox,
@@ -16,16 +16,22 @@ import useStyles from './style';
 // CheckBoxAnswers component
 export default function CheckBoxAnswers({ question }) {
   const classes = useStyles();
-  const [value, setValue] = useState(null);
+  const [chosenAnswers, setChosenAnswers] = useState([]);
   const rightAnswers = useSelector(state => state.questions.rightAnswers);
-  const answeredQuestions = useSelector(state => state.questions.answeredQuestions);
   const history = useHistory();
   const pathname = history.location.pathname.split('/')[1];
   const dispatch = useDispatch();
 
   const handleChange = e => {
-    setValue(e.target.value);
-    dispatch(chooseAnswer(question.id, question.answers.indexOf(e.target.value)));
+    if (e.target.checked) {
+      setChosenAnswers([...chosenAnswers, e.target.value]);
+      dispatch(chooseAnswer(question.id, [...chosenAnswers, e.target.value]));
+    } else {
+      setChosenAnswers(chosenAnswers.filter(answer => answer !== e.target.value));
+      dispatch(chooseAnswer(
+        question.id, chosenAnswers.filter(answer => answer !== e.target.value),
+      ));
+    }
   };
 
   return (
@@ -42,11 +48,11 @@ export default function CheckBoxAnswers({ question }) {
                     key={answer}
                     className={classes.answer}
                     style={{
-                      color: rightAnswers.find(({ id }) =>
-                        id === question.id).correctAnswerId === index
-                        ? colors.correct
-                        : answeredQuestions.find(({ id }) => id === question.id)
-                          .answerId === index && colors.wrong,
+                      color: // use color only on a chosen answer or on a right answer
+                        (chosenAnswers[index] === answer ||
+                          rightAnswers.find(({ questionId }) =>
+                            questionId === question.id).answers[index] === answer) &&
+                        answerColor(question.id, rightAnswers, answer),
                     }}
                   >
                     {answer}
@@ -57,10 +63,9 @@ export default function CheckBoxAnswers({ question }) {
           )
           : (
             <FormControl
-              component='fieldset'
               aria-label='answers'
               name='answers'
-              value={value}
+              value={chosenAnswers}
               onChange={handleChange}
               className={classes.answersGrid}
             >
