@@ -40,17 +40,17 @@ export default function Question({ question }) {
       >
         {`${question.question}`}
       </Typography>
-      <div className={classes.questionImageContainer}>
-        {
-          question.src && (
+      {
+        question.src && (
+          <div className={classes.questionImageContainer}>
             <img
               src={question.src}
               alt='img'
               className={classes.questionImage}
             />
-          )
-        }
-      </div>
+          </div>
+        )
+      }
       {answerType(question)}
     </div>
   );

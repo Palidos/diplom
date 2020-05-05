@@ -10,6 +10,7 @@ export default makeStyles(theme => ({
     height: `calc(100vh - 102px)`,
     marginLeft: '7vw',
     overflowY: 'auto',
+    maxWidth: 1000,
     '& > div:not(:first-child)': { borderTop: `1px solid ${fade(theme.palette.secondary.text, 0.5)}` },
   }),
 }));
