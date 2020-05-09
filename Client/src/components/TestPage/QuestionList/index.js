@@ -65,14 +65,13 @@ export default function QuestionList({ gridWidth }) {
           {
             isQuestionsLoaded
               ? questions
-                .sort((a, b) => (a.id > b.id ? 1 : -1))
-                .map(question => (
+                .map((question, index) => (
                   <div
                     className={classes.questionButtonWrapper}
-                    key={question.id}
+                    key={question._id}
                   >
                     <Link
-                      to={pathname === 'results' ? `/results/#q${question.id}` : `/test/#q${question.id}`}
+                      to={pathname === 'results' ? `/results/#q${question._id}` : `/test/#q${question._id}`}
                       smooth
                       offset={50}
                       duration={500}
@@ -85,10 +84,10 @@ export default function QuestionList({ gridWidth }) {
                         style={{
                           backgroundColor:
                           // eslint-disable-next-line max-len
-                          backgroundColor(question.id, pathname, rightAnswers, answeredQuestions, isQuestionAnswered),
+                          backgroundColor(question._id, pathname, rightAnswers, answeredQuestions, isQuestionAnswered),
                         }}
                       >
-                        {question.id + 1}
+                        {index + 1}
                       </Button>
                     </Link>
                   </div>

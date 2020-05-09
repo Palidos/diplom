@@ -15,6 +15,7 @@ export default function QuestionsArea({ gridWidth }) {
   const classes = useStyles();
   const questions = useSelector(state => state.questions.questions);
   const isQuestionsLoaded = useSelector(state => state.questions.isQuestionsLoaded);
+  const rightAnswers = useSelector(state => state.questions.rightAnswers);
 
   return (
     <Grid
@@ -28,11 +29,13 @@ export default function QuestionsArea({ gridWidth }) {
         {
           isQuestionsLoaded
             ? questions
-              .sort((a, b) => (a.id > b.id ? 1 : -1))
-              .map(question => (
+              .map((question, index) => (
                 <Question
-                  key={question.id}
+                  key={question._id}
                   question={question}
+                  index={index}
+                  answers={rightAnswers.find(({ questionId }) =>
+                    questionId === question._id)}
                 />
               ))
             : <CircularProgress />

@@ -7,18 +7,38 @@ import RadioAnswers from './RadioAnswers';
 import TextFieldAnswers from './TextFieldAnswers';
 
 import useStyles from './style';
+
 // Question component
-export default function Question({ question }) {
+export default function Question({
+  question,
+  index,
+  answers,
+}) {
   const classes = useStyles();
 
   const answerType = () => {
     switch (question.questionType) {
       case 0:
-        return <RadioAnswers question={question} />;
+        return (
+          <RadioAnswers
+            question={question}
+            answers={answers}
+          />
+        );
       case 1:
-        return <CheckBoxAnswers question={question} />;
+        return (
+          <CheckBoxAnswers
+            question={question}
+            answers={answers}
+          />
+        );
       case 2:
-        return <TextFieldAnswers question={question} />;
+        return (
+          <TextFieldAnswers
+            question={question}
+            answers={answers}
+          />
+        );
       default:
         break;
     }
@@ -27,13 +47,13 @@ export default function Question({ question }) {
   return (
     <div
       className={classes.questionWrapper}
-      id={`q${question.id}`}
+      id={`q${question._id}`}
     >
       <Typography
         noWrap
         className={classes.questionNumber}
       >
-        {`№${question.id + 1}.`}
+        {`№${index + 1}.`}
       </Typography>
       <Typography
         className={classes.questionTitle}
@@ -41,13 +61,16 @@ export default function Question({ question }) {
         {`${question.question}`}
       </Typography>
       {
-        question.src && (
+        (question.src || question.mainContent) && (
           <div className={classes.questionImageContainer}>
-            <img
-              src={question.src}
-              alt='img'
-              className={classes.questionImage}
-            />
+            {question.src && (
+              <img
+                src={question.src}
+                alt='img'
+                className={classes.questionImage}
+              />
+            )}
+            {question?.mainContent}
           </div>
         )
       }

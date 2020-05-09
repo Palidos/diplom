@@ -68,7 +68,7 @@ export const reducer = (state = initialState, action) => {
         questions: action.payload,
         isQuestionsLoaded: true,
         answeredQuestions: action.payload.map(question => ({
-          questionId: question.id,
+          questionId: question._id,
           answer: null,
         })),
       };

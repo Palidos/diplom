@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -11,21 +11,19 @@ import Typography from '@material-ui/core/Typography';
 
 import useStyles from './style';
 // TextFieldAnswers component
-export default function TextFieldAnswers({ question }) {
+export default function TextFieldAnswers({ question, answers }) {
   const classes = useStyles();
-  const [chosenAnswer, setChosenAnswer] = useState(null);
-  const rightAnswers = useSelector(state => state.questions.rightAnswers);
+  const [chosenAnswer, setChosenAnswer] = useState('');
   const history = useHistory();
   const pathname = history.location.pathname.split('/')[1];
   const dispatch = useDispatch();
 
   const handleChange = e => {
-    setChosenAnswer(e.target.value);
+    setChosenAnswer(Number.isNaN(parseInt(e.target.value, 10)) ? e.target.value : e.target.value.replace(/\s/g, ''));
   };
   const handleBlur = () => {
-    dispatch(chooseAnswer(question.id, chosenAnswer === '' && null));
+    dispatch(chooseAnswer(question._id, chosenAnswer === '' ? null : chosenAnswer));
   };
-
 
   return (
     <>
@@ -37,19 +35,25 @@ export default function TextFieldAnswers({ question }) {
                 className={classes.answer}
                 style={{
                   color:
-                  answerColor(question.id, rightAnswers, chosenAnswer),
+                  answerColor(question._id, answers, chosenAnswer),
                 }}
               >
-                {`Ваш ответ: ${chosenAnswer}`}
+                {`Your answer: ${chosenAnswer} `}
               </Typography>
               {
-                answerColor(question.id, rightAnswers, chosenAnswer) === colors.wrong && (
-                  <Typography
+                answerColor(question._id, answers, chosenAnswer) === colors.wrong && (
+                  <div
                     className={classes.answer}
                   >
-                    {`Правильный ответ: ${rightAnswers.find(({ questionId }) =>
-                      questionId === question.id).answers[0]}`}
-                  </Typography>
+                    {`Right answer:`}
+                    {answers.src && (
+                      <img
+                        src={answers.src}
+                        alt='img'
+                        className={classes.questionImage}
+                      />
+                    )}
+                  </div>
                 )
               }
             </>
