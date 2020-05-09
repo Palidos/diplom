@@ -1,12 +1,19 @@
 const { Router } = require('express');
+// const mongoose = require('mongoose');
 
-const modelAnswers = require('../models/answers');
-const modelQuestions = require('../models/questions');
+const InitialLevel = require('../models/initialLevel');
+const InitialLevelAnswers = require('../models/initialLevelAnswers');
 
 const router = Router();
 
+// const asd = new InitialLevelAnswers({
+//   questionId: mongoose.Types.ObjectId('5eb6b2e1e0474368ac835d5f'),
+//   answers: ['334/165', '2*4/165'],
+// });
+// asd.save(error => { if (error) { console.log(error); } else { console.log('saved'); } });
+
 router.get('/api/questions', async (req, res) => {
-  await modelQuestions.find((err, data) => {
+  await InitialLevel.find((err, data) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
@@ -20,7 +27,7 @@ router.get('/api/questions', async (req, res) => {
 
 
 router.post('/api/questions/submit', async (req, res) => {
-  await modelAnswers.find((err, data) => {
+  await InitialLevelAnswers.find((err, data) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
