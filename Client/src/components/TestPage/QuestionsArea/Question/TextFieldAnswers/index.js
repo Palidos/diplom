@@ -45,14 +45,14 @@ export default function TextFieldAnswers({ question, answers }) {
                   <div
                     className={classes.answer}
                   >
-                    {`Right answer:`}
-                    {answers.src && (
+                    {`Right answer: `}
+                    {answers.src ? (
                       <img
                         src={answers.src}
                         alt='img'
-                        className={classes.questionImage}
+                        className={classes.answerImage}
                       />
-                    )}
+                    ) : (answers.answers[0])}
                   </div>
                 )
               }
