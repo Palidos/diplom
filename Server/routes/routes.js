@@ -13,20 +13,22 @@ const router = Router();
 // asd.save(error => { if (error) { console.log(error); } else { console.log('saved'); } });
 
 router.post('/api/questions', async (req, res) => {
-  const a = req.body.map(async options => {
-    console.log(options, 'options');
-    console.log(await InitialLevel.find(options, 'theme question').exec(), 'asasasd');
-    return InitialLevel.find(options);
-  });
-  console.log(await a);
-  await res.status(200).send(await a);
+  if (req.body.length) {
+    const a = [];
+    req.body.map(async options => {
+      console.log(options, 'options');
+      console.log(await InitialLevel.find(options, 'theme').lean().exec(), 'asasasd');
+      InitialLevel.find(options).lean().exec((err, doc) => a.push(doc));
+    });
+    return res.status(200).send(a);
   // if (req.body.length) {
-  //   return res.status(200).send(await req.body.map(async options => {
+  //   req.body.map(async options => {
   //     console.log(options, 'options');
-  //     console.log(await InitialLevel.find(options, 'theme question').exec(), 'asasasd');
-  //     await InitialLevel.find(options).exec();
-  //   }));
-  // }
+  //     console.log(await InitialLevel.find(options, 'theme').lean().exec(), 'asasasd');
+  //     InitialLevel.find(options, (err, data) => res.json(data));
+  //   });
+  //   return res.status(200);
+  }
   // await InitialLevel.find({ questionLevel: 0 }, (err, data) => {
   //   if (err) {
   //     console.log(err);
