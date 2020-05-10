@@ -44,8 +44,8 @@ export const sendTestAnswers = createActionAsync(
 );
 
 
-export const fetchQuestions = () => async dispatch => {
-  dispatch(getTestQuestions());
+export const fetchQuestions = options => async dispatch => {
+  dispatch(getTestQuestions(options));
 };
 
 export const submitAnswers = answers => async dispatch => {

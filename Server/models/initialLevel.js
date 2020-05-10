@@ -10,6 +10,10 @@ const initialLevelSchema = new Schema({
     type: String,
     required: true,
   },
+  questionLevel: {
+    type: Number,
+    required: true,
+  },
 
   inlineImage: [String],
 

@@ -12,17 +12,31 @@ const router = Router();
 // });
 // asd.save(error => { if (error) { console.log(error); } else { console.log('saved'); } });
 
-router.get('/api/questions', async (req, res) => {
-  await InitialLevel.find((err, data) => {
-    if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-    if (!data) {
-      return res.status(404).json({ err: 'No data' });
-    }
-    return res.status(200).send(data);
+router.post('/api/questions', async (req, res) => {
+  const a = req.body.map(async options => {
+    console.log(options, 'options');
+    console.log(await InitialLevel.find(options, 'theme question').exec(), 'asasasd');
+    return InitialLevel.find(options);
   });
+  console.log(await a);
+  await res.status(200).send(await a);
+  // if (req.body.length) {
+  //   return res.status(200).send(await req.body.map(async options => {
+  //     console.log(options, 'options');
+  //     console.log(await InitialLevel.find(options, 'theme question').exec(), 'asasasd');
+  //     await InitialLevel.find(options).exec();
+  //   }));
+  // }
+  // await InitialLevel.find({ questionLevel: 0 }, (err, data) => {
+  //   if (err) {
+  //     console.log(err);
+  //     return res.sendStatus(500);
+  //   }
+  //   if (!data) {
+  //     return res.status(404).json({ err: 'No data' });
+  //   }
+  //   return res.status(200).send(data);
+  // });
 });
 
 
