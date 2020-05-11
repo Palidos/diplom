@@ -54,6 +54,7 @@
     "no-nested-ternary": "off",
     "consistent-return": "off",
     "implicit-arrow-linebreak": "off",
+    "no-underscore-dangle": "off",
     //
     // =========================================================
     // Quotes
