@@ -21,6 +21,7 @@ const initialState = {
   isQuestionsLoaded: false,
   answeredQuestions: [],
   rightAnswers: [],
+  submitLoaded: true,
 };
 
 
@@ -73,10 +74,17 @@ export const reducer = (state = initialState, action) => {
         })),
       };
 
+    case SUBMIT_ANSWERS_ASYNC.PENDING: return {
+      ...state,
+      submitLoaded: false,
+    };
+
     case SUBMIT_ANSWERS_ASYNC.SUCCESS:
       return {
         ...state,
         rightAnswers: action.payload,
+        isQuestionsLoaded: true,
+        submitLoaded: true,
       };
 
     case CHOOSE_ANSWER:

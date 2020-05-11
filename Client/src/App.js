@@ -11,16 +11,7 @@ export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchQuestions([
-      {
-        theme: 'geometry',
-        // questionLevel: 1,
-      },
-      {
-        theme: 'fractions',
-        // questionLevel: 1,
-      },
-    ]));
+    dispatch(fetchQuestions([{ questionLevel: 0 }]));
   }, [dispatch]);
 
   return (

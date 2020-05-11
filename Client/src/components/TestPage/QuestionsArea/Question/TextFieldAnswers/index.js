@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { answerColor } from 'models';
 import { chooseAnswer } from 'store/questionsStore';
 import { colors } from 'theme';
 
@@ -12,10 +11,10 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './style';
 // TextFieldAnswers component
 export default function TextFieldAnswers({ question, answers }) {
-  const classes = useStyles();
   const [chosenAnswer, setChosenAnswer] = useState('');
   const history = useHistory();
   const pathname = history.location.pathname.split('/')[1];
+  const classes = useStyles({ pathname });
   const dispatch = useDispatch();
 
   const handleChange = e => {
@@ -33,15 +32,12 @@ export default function TextFieldAnswers({ question, answers }) {
             <>
               <Typography
                 className={classes.answer}
-                style={{
-                  color:
-                  answerColor(question._id, answers, chosenAnswer),
-                }}
+                style={{ color: answers.correct ? colors.correct : colors.wrong }}
               >
                 {`Your answer: ${chosenAnswer} `}
               </Typography>
               {
-                answerColor(question._id, answers, chosenAnswer) === colors.wrong && (
+                !answers.correct && (
                   <div
                     className={classes.answer}
                   >

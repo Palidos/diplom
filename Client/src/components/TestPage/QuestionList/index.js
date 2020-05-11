@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { NavHashLink as Link } from 'react-router-hash-link';
 
 import CircularProgress from 'components/CircularProgress';
-import { backgroundColor } from 'models';
-import { submitAnswers } from 'store/questionsStore';
+import { submitAnswers, fetchQuestions } from 'store/questionsStore';
+import { colors } from 'theme';
 
 import {
   Button,
@@ -23,21 +23,40 @@ export default function QuestionList({ gridWidth }) {
   const questions = useSelector(state => state.questions.questions);
   const rightAnswers = useSelector(state => state.questions.rightAnswers);
   const isQuestionsLoaded = useSelector(state => state.questions.isQuestionsLoaded);
+  const submitLoaded = useSelector(state => state.questions.submitLoaded);
   const answeredQuestions = useSelector(state => state.questions.answeredQuestions);
   const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const classes = useStyles({ isQuestionsLoaded });
   const dispatch = useDispatch();
   const history = useHistory();
   const pathname = history.location.pathname.split('/')[1];
+
 
   const isQuestionAnswered = questionId => {
     return answeredQuestions.find(chosenAnswer =>
       chosenAnswer.questionId === questionId).answer !== null;
   };
 
+  const backgroundColor = qId => {
+    if (pathname === 'results') {
+      return rightAnswers.find(({ questionId }) =>
+        questionId === qId).correct
+        ? colors.correct : colors.wrong;
+    }
+    return isQuestionAnswered(qId) && colors.answered;
+  };
+
   const handleOpenSubmitDialog = () => {
     setIsSubmitDialogOpen(true);
+  };
+
+  const handleNextTest = () => {
+    dispatch(fetchQuestions(rightAnswers.map(option => ({
+      theme: option.theme,
+      questionLevel: option.correct ? option.questionLevel + 1 : option.questionLevel - 1,
+    }))));
+    history.push(`/test`);
   };
 
   const handleCloseSubmitDialog = async e => {
@@ -81,11 +100,7 @@ export default function QuestionList({ gridWidth }) {
                         variant='outlined'
                         color='primary'
                         className={classes.questionButton}
-                        style={{
-                          backgroundColor:
-                          // eslint-disable-next-line max-len
-                          backgroundColor(question._id, pathname, rightAnswers, answeredQuestions, isQuestionAnswered),
-                        }}
+                        style={{ backgroundColor: backgroundColor(question._id) }}
                       >
                         {index + 1}
                       </Button>
@@ -96,14 +111,26 @@ export default function QuestionList({ gridWidth }) {
           }
         </Paper>
         {
-          pathname === 'test' && (
+          pathname === 'test' ? (
+            submitLoaded && (
+              <Button
+                color='primary'
+                variant='contained'
+                className={classes.submitButton}
+                onClick={handleOpenSubmitDialog}
+                // disabled={isDisabled}
+              >
+                {'Submit'}
+              </Button>
+            )
+          ) : (
             <Button
               color='primary'
               variant='contained'
               className={classes.submitButton}
-              onClick={handleOpenSubmitDialog}
+              onClick={handleNextTest}
             >
-              {'Submit'}
+              {'Proceed to the next test'}
             </Button>
           )
         }
