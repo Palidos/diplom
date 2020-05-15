@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { answerColor } from 'models';
 import { chooseAnswer } from 'store/questionsStore';
+import { colors } from 'theme';
 
 import {
   FormControlLabel,
@@ -13,18 +13,19 @@ import {
 } from '@material-ui/core';
 
 import useStyles from './style';
+
 // RadioAnswers component
-export default function RadioAnswers({ question }) {
-  const classes = useStyles();
+export default function RadioAnswers({ question, answers }) {
   const [chosenAnswer, setChosenAnswer] = useState(null);
   const rightAnswers = useSelector(state => state.questions.rightAnswers);
   const history = useHistory();
   const pathname = history.location.pathname.split('/')[1];
+  const classes = useStyles({ pathname });
   const dispatch = useDispatch();
 
   const handleChange = e => {
     setChosenAnswer(e.target.value);
-    dispatch(chooseAnswer(question.id, e.target.value));
+    dispatch(chooseAnswer(question._id, question.answers.indexOf(e.target.value)));
   };
 
   return (
@@ -32,23 +33,24 @@ export default function RadioAnswers({ question }) {
       {
         pathname === 'results'
           ? (
-            <div
-              className={classes.answersGrid}
-            >
+            <div className={classes.answersGrid}>
               {
-                question.answers.map(answer => (
+                question.answers.map((answer, index) => (
                   <Typography
                     key={answer}
                     className={classes.answer}
-                    style={{
-                      color: // use color only on a chosen answer or on a right answer
-                        (chosenAnswer === answer ||
-                          rightAnswers.find(({ questionId }) =>
-                            questionId === question.id).answers[0] === answer) &&
-                        answerColor(question.id, rightAnswers, answer),
-                    }}
                   >
-                    {answer}
+                    <img
+                      src={answer}
+                      alt='img'
+                      style={{
+                        backgroundColor: // use color only on a chosen answer or on a right answer
+                        question.answers.indexOf(chosenAnswer) === index
+                          ? answers.correct ? colors.correct : colors.wrong
+                          : String(index) === rightAnswers.find(({ questionId }) =>
+                            questionId === question._id).answers[0] ? colors.correct : 'transparent',
+                      }}
+                    />
                   </Typography>
                 ))
               }
@@ -68,7 +70,12 @@ export default function RadioAnswers({ question }) {
                     key={answer}
                     value={answer}
                     control={<Radio />}
-                    label={answer}
+                    label={(
+                      <img
+                        src={answer}
+                        alt='img'
+                      />
+                    )}
                     className={classes.answer}
                   />
                 ))
