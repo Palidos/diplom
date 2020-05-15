@@ -6,14 +6,13 @@ export default makeStyles(theme => ({
   answersGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
-    justifyItems: 'center',
+    margin: theme.spacing(2, 0),
   },
-  answer: {
-    alignItems: 'center',
-    display: 'flex',
+  answer: ({ pathname }) => ({
     fontWeight: 500,
-    height: 42,
+    height: 'fit-content',
+    marginLeft: pathname === 'results' ? '30%' : '20%',
     '& .MuiTypography-root': { fontWeight: 500 },
     '& svg': { color: theme.palette.primary.main },
-  },
+  }),
 }));

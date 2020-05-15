@@ -39,7 +39,7 @@ router.post('/api/questions/submit', async (req, res) => {
       return res.status(200).send(docs.map(doc => ({
         ...doc,
         correct: doc.answers.some(answer =>
-          answer === req.body.find(({ questionId }) =>
+          Number(answer) === req.body.find(({ questionId }) =>
             questionId === doc.questionId.toString()).answer),
         theme: data.find(({ _id }) =>
           _id.toString() === doc.questionId.toString()).theme,

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { chooseAnswer } from 'store/questionsStore';
@@ -9,6 +9,7 @@ import { TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 import useStyles from './style';
+
 // TextFieldAnswers component
 export default function TextFieldAnswers({ question, answers }) {
   const [chosenAnswer, setChosenAnswer] = useState('');
@@ -38,9 +39,7 @@ export default function TextFieldAnswers({ question, answers }) {
               </Typography>
               {
                 !answers.correct && (
-                  <div
-                    className={classes.answer}
-                  >
+                  <div className={classes.answer}>
                     {`Right answer: `}
                     {answers.src ? (
                       <img
@@ -55,9 +54,7 @@ export default function TextFieldAnswers({ question, answers }) {
             </>
           )
           : (
-            <div
-              className={classes.textFieldWrapper}
-            >
+            <div className={classes.textFieldWrapper}>
               <TextField
                 variant='outlined'
                 value={chosenAnswer}
