@@ -7,7 +7,8 @@ export default makeStyles(theme => ({
     gridGap: 10,
     overflowY: 'auto',
     padding: theme.spacing(1),
-
+    minWidth: 240,
+    width: 280,
     '& .MuiButtonBase-root': { display: 'inline' },
   }),
   questionLink: {

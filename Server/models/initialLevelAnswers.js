@@ -1,6 +1,7 @@
+
 const { Schema, model } = require('mongoose');
 
-const initialLevelAnswersSchema = new Schema({
+const answersSchema = new Schema({
   questionId: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -12,4 +13,4 @@ const initialLevelAnswersSchema = new Schema({
   src: String,
 });
 
-module.exports = model('initialLevelAnswers', initialLevelAnswersSchema);
+module.exports = model('initialLevelAnswers', answersSchema);

@@ -8,12 +8,8 @@ import QuestionsArea from './QuestionsArea';
 export default function TestPage() {
   return (
     <>
-      <QuestionList
-        gridWidth={2}
-      />
-      <QuestionsArea
-        gridWidth={7}
-      />
+      <QuestionList />
+      <QuestionsArea />
     </>
   );
 }

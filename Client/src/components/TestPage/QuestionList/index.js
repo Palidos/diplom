@@ -12,14 +12,13 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
-  Grid,
   Paper,
 } from '@material-ui/core';
 
 import useStyles from './style';
 
 // QuestionList component
-export default function QuestionList({ gridWidth }) {
+export default function QuestionList() {
   const questions = useSelector(state => state.questions.questions);
   const rightAnswers = useSelector(state => state.questions.rightAnswers);
   const isQuestionsLoaded = useSelector(state => state.questions.isQuestionsLoaded);
@@ -74,12 +73,10 @@ export default function QuestionList({ gridWidth }) {
 
   return (
     <>
-      <Grid
-        item
-        xs={gridWidth}
-      >
+      <div>
         <Paper
           className={classes.questionList}
+          elevation={3}
         >
           {
             isQuestionsLoaded
@@ -134,7 +131,7 @@ export default function QuestionList({ gridWidth }) {
             </Button>
           )
         }
-      </Grid>
+      </div>
 
       <Dialog
         open={isSubmitDialogOpen}
