@@ -33,21 +33,21 @@ export default function TextFieldAnswers({ question, answers }) {
             <>
               <Typography
                 className={classes.answer}
-                style={{ color: answers.correct ? colors.correct : colors.wrong }}
+                style={{ color: answers?.correct ? colors.correct : colors.wrong }}
               >
                 {`Your answer: ${chosenAnswer} `}
               </Typography>
               {
-                !answers.correct && (
+                !answers?.correct && (
                   <div className={classes.answer}>
                     {`Right answer: `}
-                    {answers.src ? (
+                    {answers?.src ? (
                       <img
                         src={answers.src}
                         alt='img'
                         className={classes.answerImage}
                       />
-                    ) : (answers.answers[0])}
+                    ) : (answers?.answers[0])}
                   </div>
                 )
               }

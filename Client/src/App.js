@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import Layout from 'components/Layout';
+import SelectionPage from 'components/SelectionPage';
 import TestPage from 'components/TestPage';
 import { fetchQuestions } from 'store/questionsStore';
 
@@ -17,6 +18,10 @@ export default function App() {
   return (
     <Layout>
       <Switch>
+        {/* <Route
+          path='/main'
+          component={SelectionPage}
+        /> */}
         <Route
           path='/test'
           component={TestPage}
