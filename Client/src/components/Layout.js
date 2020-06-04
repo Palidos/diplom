@@ -16,6 +16,7 @@ export default function Layout({ children }) {
   useEffect(() => {
     // const pathname = history.location.pathname.split('/')[1];
     history.push('/test');
+    // history.push('/main');
   }, [history]);
 
 

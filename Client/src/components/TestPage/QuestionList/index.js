@@ -40,7 +40,7 @@ export default function QuestionList() {
   const backgroundColor = qId => {
     if (pathname === 'results') {
       return rightAnswers.find(({ questionId }) =>
-        questionId === qId).correct
+        questionId === qId)?.correct
         ? colors.correct : colors.wrong;
     }
     return isQuestionAnswered(qId) && colors.answered;
