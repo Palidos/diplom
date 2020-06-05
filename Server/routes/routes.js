@@ -1,9 +1,8 @@
 const { Router } = require('express');
 const mongoose = require('mongoose');
 
-// const InitialLevel = require('../models/initialLevel');
-// const InitialLevelAnswers = require('../models/initialLevelAnswers');
-const MathTest = require('../models/math');
+// const MathTest = require('../models/math');
+const models = require('../models/index');
 
 const router = Router();
 
@@ -16,23 +15,22 @@ const router = Router();
 // });
 // asd.save(error => { if (error) { console.log(error); } else { console.log('saved'); } });
 
-// router.get('/api/testList', async (req, res) => {
-//   mongoose.connection.db.listCollections().toArray((err, list) => {
-//     const a = list.map(test => { console.log(test); return test.name; });
-//     console.log(a, 'jopa');
-//     if (err) {
-//       console.log(err);
-//       return res.sendStatus(500);
-//     }
-//     if (!list) {
-//       return res.status(404).json({ err: 'No data' });
-//     }
-//     return res.status(200).send(a);
-//   });
-// });
+router.get('/api/testList', async (req, res) => {
+  mongoose.connection.db.listCollections().toArray((err, list) => {
+    const collectionsNames = list.map(test => { console.log(test); return test.name; });
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    if (!list) {
+      return res.status(404).json({ err: 'No data' });
+    }
+    return res.status(200).send(collectionsNames);
+  });
+});
 
 router.post('/api/questions', async (req, res) => {
-  MathTest.find({ $or: req.body }).lean().exec((err, docs) => {
+  models[req.body.collection].find({ $or: req.body.settings }).lean().exec((err, docs) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
@@ -47,8 +45,8 @@ router.post('/api/questions', async (req, res) => {
 });
 
 router.post('/api/questions/submit', async (req, res) => {
-  const options = req.body.map(option => ({ _id: option.questionId }));
-  await MathTest.find({ $or: options }).lean().exec((err, docs) => {
+  const options = req.body.answers.map(option => ({ _id: option.questionId }));
+  models[req.body.collection].find({ $or: options }).lean().exec((err, docs) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
@@ -64,7 +62,7 @@ router.post('/api/questions/submit', async (req, res) => {
       src: answerImage,
       correct: rightAnswers.some(rightAnswer =>
       // eslint-disable-next-line eqeqeq
-        rightAnswer == req.body.find(({ questionId }) =>
+        rightAnswer == req.body.answers.find(({ questionId }) =>
           questionId === questionInfo._id.toString()).answer),
       theme: questionInfo.theme,
       questionLevel: questionInfo.questionLevel,

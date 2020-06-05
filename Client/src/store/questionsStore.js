@@ -39,7 +39,7 @@ export const chooseAnswer = (questionId, answer) => ({
 export const getTestQuestions = createActionAsync(
   GET_QUESTIONS, questionsServices.getTestQuestions,
 );
-// payload: answers
+// payload: {testName, answers}
 export const sendTestAnswers = createActionAsync(
   SUBMIT_ANSWERS, questionsServices.sendTestAnswers,
 );
@@ -49,8 +49,8 @@ export const fetchQuestions = options => async dispatch => {
   dispatch(getTestQuestions(options));
 };
 
-export const submitAnswers = answers => async dispatch => {
-  await dispatch(sendTestAnswers(answers));
+export const submitAnswers = testNameAndAnswers => async dispatch => {
+  await dispatch(sendTestAnswers(testNameAndAnswers));
 };
 
 
