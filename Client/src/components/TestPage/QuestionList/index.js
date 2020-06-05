@@ -51,17 +51,23 @@ export default function QuestionList() {
   };
 
   const handleNextTest = () => {
-    dispatch(fetchQuestions(rightAnswers.map(option => ({
-      theme: option.theme,
-      questionLevel: option.correct ? option.questionLevel + 1 : option.questionLevel - 1,
-    }))));
+    dispatch(fetchQuestions({
+      collection: 'math',
+      settings: rightAnswers.map(option => ({
+        theme: option.theme,
+        questionLevel: option.correct ? option.questionLevel + 1 : option.questionLevel - 1,
+      })),
+    }));
     history.push(`/test`);
   };
 
   const handleCloseSubmitDialog = async e => {
     setIsSubmitDialogOpen(false);
     if (e.currentTarget.name === 'submit') {
-      await dispatch(submitAnswers(answeredQuestions));
+      await dispatch(submitAnswers({
+        collection: 'math',
+        answers: answeredQuestions,
+      }));
       history.push(`/results`);
     }
   };

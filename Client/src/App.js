@@ -12,7 +12,10 @@ export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchQuestions([{ questionLevel: 0 }]));
+    dispatch(fetchQuestions({
+      collection: 'math',
+      settings: [{ questionLevel: 0 }],
+    }));
   }, [dispatch]);
 
   return (

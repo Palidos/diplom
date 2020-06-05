@@ -6,5 +6,17 @@ export default makeStyles(theme => ({
     justifyContent: 'center',
     width: '100%',
   },
-  mainScreenPaper: { width: 700 },
+  mainScreenPaper: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: 500,
+  },
+  selectionWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  testSelector: {
+    marginBottom: theme.spacing(2),
+    width: 200,
+  },
 }));
