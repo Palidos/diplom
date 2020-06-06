@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { getTestsList } from 'services/api/questionsServices';
+import { setTestName } from 'store/questionsStore';
 
 import {
   Paper, FormControl, Select, MenuItem, InputLabel, Button,
@@ -11,9 +14,18 @@ import useStyles from './style';
 // SelectionPage component
 export default function SelectionPage() {
   const classes = useStyles();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const [tests, setTests] = useState([]);
   const [chosenTest, setChosenTest] = useState('');
+
+  const handleSelectTest = () => {
+    if (chosenTest === 'newTest') { history.push('/newTest'); } else {
+      dispatch(setTestName(chosenTest));
+      history.push('/test');
+    }
+  };
 
   useEffect(() => {
     const checker = async () => {
@@ -42,12 +54,18 @@ export default function SelectionPage() {
               <Select
                 value={chosenTest}
                 onChange={e => setChosenTest(e.target.value)}
+                defaultValue={'--- Create new Test ---'}
                 MenuProps={menuPropsObj}
                 inputProps={{
                   name: 'test',
                   id: 'test-simple',
                 }}
               >
+                <MenuItem
+                  value={'newTest'}
+                >
+                  {'--- Create new Test ---'}
+                </MenuItem>
                 {
                   tests && tests
                     .map(name => (
@@ -59,18 +77,15 @@ export default function SelectionPage() {
                       </MenuItem>
                     ))
                 }
-                <MenuItem
-                  value={'newTest'}
-                >
-                  {'Create new Test'}
-                </MenuItem>
               </Select>
             </FormControl>
             <Button
               variant='contained'
               color='primary'
+              disabled={!chosenTest}
+              onClick={handleSelectTest}
             >
-              {'proceed'}
+              {'Select'}
             </Button>
           </div>
         </Paper>

@@ -1,20 +1,20 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
-
+const chokidar = require('chokidar');
 const fs = require('fs');
+const path = require('path');
 
-// const models = { math: require('./math') };
-// const models = { };
+let models = {};
+const watcher = chokidar.watch(path.join(__dirname, 'collectionsModels'), { persistent: true });
 
-const modelsNames = fs.readdirSync(__dirname).map(file => file.split('.')[0]).filter(file => file !== 'index');
+watcher.on('all', () => {
+  const modelsNames = fs.readdirSync(path.join(__dirname, 'collectionsModels'))
+    .map(file => file.split('.')[0]);
 
-// modelsNames.map(modelName => ({
-//   ...models,
-//   [modelName]: require(`./${modelName}`),
-// }));
+  models = modelsNames.reduce((obj, modelName) => ({
+    ...obj,
+    [modelName]: require(`./collectionsModels/${modelName}`),
+  }), {});
+});
 
-const models = modelsNames.reduce((obj, modelName) => ({
-  ...obj,
-  [modelName]: require(`./${modelName}`),
-}), {});
 module.exports = models;

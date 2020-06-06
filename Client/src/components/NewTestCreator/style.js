@@ -9,15 +9,19 @@ export default makeStyles(theme => ({
   mainScreenPaper: {
     display: 'flex',
     justifyContent: 'center',
-    width: 500,
+    width: 700,
   },
-  selectionWrapper: {
+  TestCreatorWrapper: {
     display: 'flex',
     flexDirection: 'column',
     marginTop: 50,
   },
-  testSelector: {
+  testCreator: {
     marginBottom: theme.spacing(2),
     width: 200,
+  },
+  questionTypeSelector: {
+    '& .MuiFormLabel-root': { textAlign: 'center' },
+    '& .MuiFormGroup-root': { flexDirection: 'row' },
   },
 }));
