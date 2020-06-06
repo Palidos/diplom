@@ -1,30 +1,25 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Layout from 'components/Layout';
+import NewTestCreator from 'components/NewTestCreator';
 import SelectionPage from 'components/SelectionPage';
 import TestPage from 'components/TestPage';
-import { fetchQuestions } from 'store/questionsStore';
+
 
 // App component with all routing
 export default function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchQuestions({
-      collection: 'math',
-      settings: [{ questionLevel: 0 }],
-    }));
-  }, [dispatch]);
-
   return (
     <Layout>
       <Switch>
-        {/* <Route
+        <Route
           path='/main'
           component={SelectionPage}
-        /> */}
+        />
+        <Route
+          path='/newTest/:testName?'
+          component={NewTestCreator}
+        />
         <Route
           path='/test'
           component={TestPage}

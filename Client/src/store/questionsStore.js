@@ -6,6 +6,7 @@ import {
 } from './helpers';
 
 // Action Types
+const SET_TEST_NAME = 'SET_TEST_NAME';
 const CHOOSE_ANSWER = 'CHOOSE_ANSWER';
 
 const GET_QUESTIONS = 'GET_QUESTIONS';
@@ -17,6 +18,7 @@ const SUBMIT_ANSWERS_ASYNC = getAsyncTypes(SUBMIT_ANSWERS);
 
 // Initial State
 const initialState = {
+  testName: '',
   questions: [],
   isQuestionsLoaded: false,
   answeredQuestions: [],
@@ -26,6 +28,11 @@ const initialState = {
 
 
 // Actions (dispatchers)
+
+export const setTestName = testName => ({
+  type: SET_TEST_NAME,
+  payload: testName,
+});
 
 export const chooseAnswer = (questionId, answer) => ({
   type: CHOOSE_ANSWER,
@@ -85,6 +92,12 @@ export const reducer = (state = initialState, action) => {
         rightAnswers: action.payload,
         isQuestionsLoaded: true,
         submitLoaded: true,
+      };
+
+    case SET_TEST_NAME:
+      return {
+        ...state,
+        testName: action.payload,
       };
 
     case CHOOSE_ANSWER:

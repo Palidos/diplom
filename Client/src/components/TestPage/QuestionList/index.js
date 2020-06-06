@@ -24,6 +24,7 @@ export default function QuestionList() {
   const isQuestionsLoaded = useSelector(state => state.questions.isQuestionsLoaded);
   const submitLoaded = useSelector(state => state.questions.submitLoaded);
   const answeredQuestions = useSelector(state => state.questions.answeredQuestions);
+  const testName = useSelector(state => state.questions.testName);
   const [isSubmitDialogOpen, setIsSubmitDialogOpen] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const classes = useStyles({ isQuestionsLoaded });
@@ -52,7 +53,7 @@ export default function QuestionList() {
 
   const handleNextTest = () => {
     dispatch(fetchQuestions({
-      collection: 'math',
+      collection: testName,
       settings: rightAnswers.map(option => ({
         theme: option.theme,
         questionLevel: option.correct ? option.questionLevel + 1 : option.questionLevel - 1,
@@ -65,7 +66,7 @@ export default function QuestionList() {
     setIsSubmitDialogOpen(false);
     if (e.currentTarget.name === 'submit') {
       await dispatch(submitAnswers({
-        collection: 'math',
+        collection: testName,
         answers: answeredQuestions,
       }));
       history.push(`/results`);

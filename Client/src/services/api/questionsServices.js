@@ -1,6 +1,6 @@
 import * as apiClient from './apiClient';
 import {
-  API_QUESTIONS, API_QUESTIONS_SUBMIT, API_TESTS_LIST,
+  API_QUESTIONS, API_QUESTIONS_SUBMIT, API_TESTS_LIST, API_NEW_TEST,
 } from './endpoints';
 
 
@@ -8,6 +8,7 @@ export const getTestsList = async () => apiClient.get(API_TESTS_LIST);
 export const getTestQuestions = async options => apiClient.post(API_QUESTIONS, options);
 export const sendTestAnswers = async testNameAndAnswers =>
   apiClient.post(API_QUESTIONS_SUBMIT, testNameAndAnswers);
+export const createTest = async testName => apiClient.post(API_NEW_TEST, testName);
 // export const getCourseTeachers = async courseId => apiClient.get(API_COURSES_ID_USERS(courseId));
 // export const getTeacherCourses = async () => apiClient.get(API_TEACHER_COURSES);
 // export const createCourse = async course => apiClient.post(API_COURSES, course);
