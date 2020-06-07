@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { createTest } from 'services/api/questionsServices';
+import { createTest, addQuestion } from 'services/api/questionsServices';
 
 import {
   Paper, Button, TextField, Radio, FormControlLabel, RadioGroup, FormControl, FormLabel,
 } from '@material-ui/core';
+
+import ImageUploader from './ImageUploader';
 
 import useStyles from './style';
 
@@ -17,20 +19,21 @@ export default function SelectionPage() {
   const dispatch = useDispatch();
   const pathname = history.location.pathname.split('/')[2];
 
+  const [isFirstQuestion, setIsFirstQuestion] = useState(true);
   const [testName, setTestName] = useState('');
   const [questionInfo, setQuestionInfo] = useState({
     questionType: 0,
     theme: '',
-    questionLevel: null,
+    questionLevel: '',
     question: '',
-    src: null,
-    answers: null,
-    rightAnswers: null,
-    answerImage: null,
+    src: '',
+    answers: [],
+    rightAnswers: [],
+    answerImage: '',
   });
 
   const handleChangeTestName = e => {
-    setTestName(e.target.value);
+    setTestName(e.target.value.toLowerCase().replace(/ /g, '_'));
   };
 
   const handleCreateTest = () => {
@@ -38,12 +41,52 @@ export default function SelectionPage() {
     history.push(`/newTest/${testName}`);
   };
 
-  const handleChangeQuestionInfo = e => {
+  const handleChangeQuestionTypeAndLevel = e => {
+    e.persist();
     setQuestionInfo(previousQuestionInfo => ({
       ...previousQuestionInfo,
-      [e.target.name]: Number(e.target.value),
+      [e.target.name]: parseInt(e.target.value, 10),
     }));
   };
+
+  const handleChangeQuestionInfo = e => {
+    e.persist();
+    setQuestionInfo(previousQuestionInfo => ({
+      ...previousQuestionInfo,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleChangeQuestionAnswers = e => {
+    e.persist();
+    setQuestionInfo(previousQuestionInfo => ({
+      ...previousQuestionInfo,
+      [e.target.name]: [e.target.value],
+    }));
+  };
+
+  const handleAddQuestion = () => {
+    addQuestion({
+      collection: testName,
+      questionInfo,
+    });
+    setQuestionInfo({
+      questionType: 0,
+      theme: '',
+      questionLevel: '',
+      question: '',
+      src: null,
+      answers: [],
+      rightAnswers: [],
+      answerImage: null,
+    });
+    setIsFirstQuestion(false);
+  };
+
+  const handleFinishQuestionCreation = () => {
+    history.push('/main');
+  };
+
   console.log(questionInfo);
   return (
     <>
@@ -78,6 +121,16 @@ export default function SelectionPage() {
                 </>
               ) : (
                 <>
+                  {!isFirstQuestion && (
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={handleFinishQuestionCreation}
+                      className={classes.finishCreationButton}
+                    >
+                      {'Finish question creation'}
+                    </Button>
+                  )}
                   <FormControl
                     component='fieldset'
                     className={classes.questionTypeSelector}
@@ -87,7 +140,7 @@ export default function SelectionPage() {
                       aria-label='questionType'
                       name='questionType'
                       value={questionInfo.questionType}
-                      onChange={handleChangeQuestionInfo}
+                      onChange={handleChangeQuestionTypeAndLevel}
                     >
                       <FormControlLabel
                         value={0}
@@ -123,7 +176,7 @@ export default function SelectionPage() {
                     name='questionLevel'
                     inputProps={{ maxLength: 50 }}
                     value={questionInfo.questionLevel}
-                    onChange={handleChangeQuestionInfo}
+                    onChange={handleChangeQuestionTypeAndLevel}
                     autoComplete={'questionLevel'}
                     className={classes.testCreator}
                   />
@@ -137,6 +190,12 @@ export default function SelectionPage() {
                     autoComplete={'question'}
                     className={classes.testCreator}
                   />
+
+                  <ImageUploader
+                    setQuestionInfo={setQuestionInfo}
+                    inputName={'src'}
+                  />
+
                   {(questionInfo.questionType === 0 || questionInfo.questionType === 1) && (
                     <TextField
                       margin='normal'
@@ -144,7 +203,7 @@ export default function SelectionPage() {
                       label='Question answers variants'
                       name='answers'
                       value={questionInfo.answers}
-                      onChange={handleChangeQuestionInfo}
+                      onChange={handleChangeQuestionAnswers}
                       autoComplete={'answers'}
                       className={classes.testCreator}
                     />
@@ -155,10 +214,23 @@ export default function SelectionPage() {
                     label='Question correct answers'
                     name='rightAnswers'
                     value={questionInfo.rightAnswers}
-                    onChange={handleChangeQuestionInfo}
+                    onChange={handleChangeQuestionAnswers}
                     autoComplete={'rightAnswers'}
                     className={classes.testCreator}
                   />
+                  <ImageUploader
+                    setQuestionInfo={setQuestionInfo}
+                    inputName={'answerImage'}
+                  />
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    disabled={Object.keys(questionInfo).length === 0}
+                    onClick={handleAddQuestion}
+                    className={classes.nextQuestionButton}
+                  >
+                    {'Next question'}
+                  </Button>
                 </>
               )}
           </div>

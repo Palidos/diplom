@@ -4,24 +4,20 @@ export default makeStyles(theme => ({
   mainScreenWrapper: {
     display: 'flex',
     justifyContent: 'center',
+    height: 'calc(100vh - 100px)',
     width: '100%',
   },
   mainScreenPaper: {
     display: 'flex',
-    justifyContent: 'center',
-    width: 700,
+    padding: theme.spacing(2),
+    width: 500,
   },
   TestCreatorWrapper: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: 50,
+    width: '100%',
   },
-  testCreator: {
-    marginBottom: theme.spacing(2),
-    width: 200,
-  },
-  questionTypeSelector: {
-    '& .MuiFormLabel-root': { textAlign: 'center' },
-    '& .MuiFormGroup-root': { flexDirection: 'row' },
-  },
+  testCreator: { marginBottom: theme.spacing(2) },
+  nextQuestionButton: { marginTop: theme.spacing(2) },
+  finishCreationButton: { marginBottom: theme.spacing(2) },
 }));
