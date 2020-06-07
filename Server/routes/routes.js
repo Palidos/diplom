@@ -3,23 +3,14 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const path = require('path');
 
-// const MathTest = require('../models/math');
 const models = require('../models/index');
 
 const router = Router();
 
-// const asd = new MathTest({
-//   questionType: 456,
-//   theme: '456',
-//   questionLevel: 456,
-//   question: '4555555556',
-//   rightAnswers: ['456'],
-// });
-// asd.save(error => { if (error) { console.log(error); } else { console.log('saved'); } });
 
 router.get('/api/testList', async (req, res) => {
   mongoose.connection.db.listCollections().toArray((err, list) => {
-    const collectionsNames = list.map(test => { console.log(test); return test.name; });
+    const collectionsNames = list.map(test => { return test.name; });
     if (err) {
       console.log(err);
       return res.sendStatus(500);
@@ -52,12 +43,22 @@ router.post('/api/newTest', async (req, res) => {
 
       fs.writeFile(path.join(__dirname, `../models/collectionsModels/${testName}.js`), newValue, 'utf-8', error => {
         if (error) { return res.status(500).json({ err: error }); }
-        return res.status(201).json({ err: 'File created' });
+        return res.status(201).json({ msg: 'File created' });
       });
     });
   } catch (err) {
     console.error(err);
   }
+});
+
+router.post('/api/addQuestion', async (req, res) => {
+  models[req.body.collection].create(req.body.questionInfo, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    return res.status(201).json({ msg: 'Question added' });
+  });
 });
 
 router.post('/api/questions', async (req, res) => {
