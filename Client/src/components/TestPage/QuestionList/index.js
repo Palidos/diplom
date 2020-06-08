@@ -53,8 +53,8 @@ export default function QuestionList() {
 
   const handleNextTest = () => {
     dispatch(fetchQuestions({
-      collection: testName,
       settings: rightAnswers.map(option => ({
+        testName,
         theme: option.theme,
         questionLevel: option.correct ? option.questionLevel + 1 : option.questionLevel - 1,
       })),
@@ -65,10 +65,7 @@ export default function QuestionList() {
   const handleCloseSubmitDialog = async e => {
     setIsSubmitDialogOpen(false);
     if (e.currentTarget.name === 'submit') {
-      await dispatch(submitAnswers({
-        collection: testName,
-        answers: answeredQuestions,
-      }));
+      await dispatch(submitAnswers({ answers: answeredQuestions }));
       history.push(`/results`);
     }
   };

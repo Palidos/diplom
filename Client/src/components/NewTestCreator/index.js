@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { createTest, addQuestion } from 'services/api/questionsServices';
+import { addQuestion } from 'services/api/questionsServices';
+import { setTestNameStore } from 'store/questionsStore';
 
 import {
   Paper, Button, TextField, Radio, FormControlLabel, RadioGroup, FormControl, FormLabel,
@@ -18,27 +19,28 @@ export default function SelectionPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   const pathname = history.location.pathname.split('/')[2];
-
+  const [isCreateQuestionDisabled, setIsCreateQuestionDisabled] = useState(true);
   const [isFirstQuestion, setIsFirstQuestion] = useState(true);
-  const [testName, setTestName] = useState('');
+  const [testName, setTestName] = useState(useSelector(state => state.questions.testName));
   const [questionInfo, setQuestionInfo] = useState({
+    testName,
     questionType: 0,
     theme: '',
-    questionLevel: '',
+    questionLevel: 0,
     question: '',
     src: '',
-    answers: [],
     rightAnswers: [],
     answerImage: '',
+    answers: [],
   });
 
   const handleChangeTestName = e => {
-    setTestName(e.target.value.toLowerCase().replace(/ /g, '_'));
+    setTestName(e.target.value);
   };
 
   const handleCreateTest = () => {
-    createTest({ testName });
-    history.push(`/newTest/${testName}`);
+    dispatch(setTestNameStore(testName));
+    history.push(`/edit/${testName.replace(/ /g, '_')}`);
   };
 
   const handleChangeQuestionTypeAndLevel = e => {
@@ -66,26 +68,49 @@ export default function SelectionPage() {
   };
 
   const handleAddQuestion = () => {
-    addQuestion({
-      collection: testName,
-      questionInfo,
-    });
-    setQuestionInfo({
-      questionType: 0,
-      theme: '',
-      questionLevel: '',
+    addQuestion(JSON.stringify(questionInfo));
+    setQuestionInfo(oldQuestionInfo => ({
+      testName,
+      questionType: oldQuestionInfo.questionType,
+      theme: oldQuestionInfo.theme,
+      questionLevel: oldQuestionInfo.questionLevel,
       question: '',
       src: null,
       answers: [],
       rightAnswers: [],
       answerImage: null,
-    });
+    }));
     setIsFirstQuestion(false);
   };
 
   const handleFinishQuestionCreation = () => {
     history.push('/main');
   };
+
+
+  useEffect(() => {
+    setIsCreateQuestionDisabled(questionInfo.theme === '' ||
+    isNaN(questionInfo.questionLevel) ||
+    questionInfo.question === '' ||
+    !questionInfo.rightAnswers.length ||
+    ((questionInfo.questionType === 0 || questionInfo.questionType === 1) &&
+      !questionInfo.answers.length));
+  }, [
+    questionInfo.answers.length,
+    questionInfo.question,
+    questionInfo.questionLevel,
+    questionInfo.questionType,
+    questionInfo.rightAnswers.length,
+    questionInfo.theme,
+  ]);
+
+  useEffect(() => {
+    setQuestionInfo({
+      ...questionInfo,
+      testName,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [testName]);
 
   console.log(questionInfo);
   return (
@@ -174,7 +199,8 @@ export default function SelectionPage() {
                     fullWidth
                     label='Question difficulty level'
                     name='questionLevel'
-                    inputProps={{ maxLength: 50 }}
+                    type='number'
+                    InputLabelProps={{ shrink: true }}
                     value={questionInfo.questionLevel}
                     onChange={handleChangeQuestionTypeAndLevel}
                     autoComplete={'questionLevel'}
@@ -225,7 +251,7 @@ export default function SelectionPage() {
                   <Button
                     variant='contained'
                     color='primary'
-                    disabled={Object.keys(questionInfo).length === 0}
+                    disabled={isCreateQuestionDisabled}
                     onClick={handleAddQuestion}
                     className={classes.nextQuestionButton}
                   >

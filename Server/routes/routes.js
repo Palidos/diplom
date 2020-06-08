@@ -1,68 +1,49 @@
 const { Router } = require('express');
-const fs = require('fs');
-const mongoose = require('mongoose');
-const path = require('path');
+// const mongoose = require('mongoose');
 
-const models = require('../models/index');
+const Questions = require('../models/Questions');
 
 const router = Router();
 
+// models[req.body.collection].create(req.body.questionInfo, (err, result) => {
+//   if (err) {
+//     console.log(err);
+//     return res.sendStatus(500);
+//   }
+//   return res.status(201).json({ msg: 'Question added' });
+// });
+
 
 router.get('/api/testList', async (req, res) => {
-  mongoose.connection.db.listCollections().toArray((err, list) => {
-    const collectionsNames = list.map(test => { return test.name; });
+  Questions.find({}, 'testName').lean().exec((err, docs) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
     }
-    if (!list) {
+    if (!docs) {
       return res.status(404).json({ err: 'No data' });
     }
-    return res.status(200).send(collectionsNames);
+    const testNames = Array.from(new Set(docs.map(doc => doc.testName)));
+    return res.status(200).send(testNames);
   });
-});
-
-router.post('/api/newTest', async (req, res) => {
-  const { testName } = req.body;
-  try {
-    if (fs.existsSync(path.join(__dirname, `../models/collectionsModels/${testName}.js`))) {
-      return res.status(409).json({ err: 'File Already exists' });
-    }
-  } catch (err) {
-    console.error(err);
-  }
-  try {
-    fs.copyFileSync(path.join(__dirname, '../models/testsModelTemplate.js'),
-      path.join(__dirname, `../models/collectionsModels/${testName}.js`),
-      fs.constants.COPYFILE_EXCL);
-
-    fs.readFile(path.join(__dirname, `../models/collectionsModels/${testName}.js`), 'utf-8', (err, data) => {
-      if (err) { console.log('mocha'); return res.status(500).json({ err: err }); }
-
-      const newValue = data.replace(/testName/gi, `${testName}`);
-
-      fs.writeFile(path.join(__dirname, `../models/collectionsModels/${testName}.js`), newValue, 'utf-8', error => {
-        if (error) { return res.status(500).json({ err: error }); }
-        return res.status(201).json({ msg: 'File created' });
-      });
-    });
-  } catch (err) {
-    console.error(err);
-  }
 });
 
 router.post('/api/addQuestion', async (req, res) => {
-  models[req.body.collection].create(req.body.questionInfo, (err, result) => {
-    if (err) {
-      console.log(err);
-      return res.sendStatus(500);
-    }
-    return res.status(201).json({ msg: 'Question added' });
-  });
+  console.log(req.body);
+  const data = JSON.parse(req.body);
+  console.log(data);
+  // Questions.create(req.body.questionInfo, (err, result) => {
+  //   if (err) {
+  //     console.log(err);
+  //     return res.sendStatus(500);
+  //   }
+  return res.status(201).json({ msg: `Question added to test ` });
+  // return res.status(201).json({ msg: `Question added to test ${req.body.questionInfo.testName}` });
+  // });
 });
 
 router.post('/api/questions', async (req, res) => {
-  models[req.body.collection].find({ $or: req.body.settings }).lean().exec((err, docs) => {
+  Questions.find({ $or: req.body.settings }).lean().exec((err, docs) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);
@@ -78,7 +59,7 @@ router.post('/api/questions', async (req, res) => {
 
 router.post('/api/questions/submit', async (req, res) => {
   const options = req.body.answers.map(option => ({ _id: option.questionId }));
-  models[req.body.collection].find({ $or: options }).lean().exec((err, docs) => {
+  Questions.find({ $or: options }).lean().exec((err, docs) => {
     if (err) {
       console.log(err);
       return res.sendStatus(500);

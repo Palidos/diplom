@@ -17,19 +17,22 @@ export default makeStyles(theme => ({
       height: isWideScreen ? 'auto' : '100vh',
     },
   }),
-  menuButton: { marginRight: theme.spacing(2) },
   title: {
-    order: 1,
-    marginLeft: theme.spacing(1),
-    textAlign: 'left',
-
-    width: '100%',
-    height: 33,
     color: theme.palette.primary.main,
+    cursor: 'pointer',
+    height: 33,
+
+    display: 'block',
+    fontSize: '2em',
+    marginBlockStart: '0.67em',
+    marginBlockEnd: '0.67em',
+    marginInlineStart: '0px',
+    marginInlineEnd: '0px',
+    fontWeight: 'bold',
+    textDecoration: 'none',
+
+    order: 1,
+    textAlign: 'left',
+    width: 'fit-content',
   },
-  sideBarButton: {
-    order: 0,
-    marginRight: theme.spacing(1),
-  },
-  swipeableDrawer: { '& [class^="MuiDrawer"]': { minWidth: '250px' } },
 }));

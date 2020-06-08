@@ -29,7 +29,7 @@ const initialState = {
 
 // Actions (dispatchers)
 
-export const setTestName = testName => ({
+export const setTestNameStore = testName => ({
   type: SET_TEST_NAME,
   payload: testName,
 });

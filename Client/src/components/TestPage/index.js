@@ -16,8 +16,12 @@ export default function TestPage() {
 
   useEffect(() => {
     dispatch(fetchQuestions({
-      collection: testName,
-      settings: [{ questionLevel: 0 }],
+      settings: [
+        {
+          testName,
+          questionLevel: 0,
+        },
+      ],
     }));
   }, [dispatch, testName]);
 
