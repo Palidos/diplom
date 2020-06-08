@@ -16,8 +16,13 @@ export default makeStyles(theme => ({
     flexDirection: 'column',
     marginTop: 50,
   },
+  topInputs: { display: 'flex' },
   testSelector: {
     marginBottom: theme.spacing(2),
     width: 200,
+  },
+  isEditCheckbox: {
+    margin: 0,
+    '& svg': { color: theme.palette.primary.main },
   },
 }));

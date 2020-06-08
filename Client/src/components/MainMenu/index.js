@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,7 +9,8 @@ import useStyles from './style';
 // MainMenu component
 export default function MainMenu() {
   const classes = useStyles();
-
+  const history = useHistory();
+  const handleClick = () => { history.push('/main'); };
 
   return (
     <AppBar
@@ -19,7 +21,15 @@ export default function MainMenu() {
       <Toolbar className={classes.toolBar}>
 
         {/* Logo */}
-        <h1 className={classes.title}>{'Smart tests'}</h1>
+        {// eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+          <a
+            href={'/main'}
+            // onClick={handleClick}
+            className={classes.title}
+          >
+            {'Smart tests'}
+          </a>
+        }
 
 
       </Toolbar>

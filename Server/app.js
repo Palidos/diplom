@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -11,8 +12,12 @@ const PORT = process.env.PORT || 8080;
 
 const app = express();
 app.use(cors());
-app.use(express.json()); // for parsing application/json
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+// app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.text()); // for parsing application/json
+app.use(bodyParser.urlencoded({
+  limit: '50mb',
+  extended: true,
+})); // for parsing application/x-www-form-urlencoded
 app.use(routes);
 
 const start = async () => {

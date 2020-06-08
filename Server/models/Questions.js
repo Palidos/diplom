@@ -2,7 +2,8 @@
 
 const { Schema, model } = require('mongoose');
 
-const testSchema = new Schema({
+const questionsSchema = new Schema({
+  testName: { type: String, required: true },
   questionType: { type: Number, required: true },
   theme: { type: String, required: true },
   questionLevel: { type: Number, required: true },
@@ -13,4 +14,4 @@ const testSchema = new Schema({
   answerImage: String,
 });
 
-module.exports = model('test_123', testSchema);
+module.exports = model('questions', questionsSchema);

@@ -63,6 +63,7 @@
     "react/jsx-props-no-spreading": "off",
     "implicit-arrow-linebreak": "off",
     "no-underscore-dangle": "off",
+    "no-restricted-globals":"off",
     //
     // =========================================================
     // Quotes

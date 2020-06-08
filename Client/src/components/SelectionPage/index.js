@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { getTestsList } from 'services/api/questionsServices';
-import { setTestName } from 'store/questionsStore';
+import { setTestNameStore } from 'store/questionsStore';
 
 import {
-  Paper, FormControl, Select, MenuItem, InputLabel, Button,
+  Paper, FormControl, Select, MenuItem, InputLabel, Button, Checkbox, FormControlLabel,
 } from '@material-ui/core';
 
 import useStyles from './style';
@@ -19,12 +19,21 @@ export default function SelectionPage() {
 
   const [tests, setTests] = useState([]);
   const [chosenTest, setChosenTest] = useState('');
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const handleSelectTest = () => {
-    if (chosenTest === 'newTest') { history.push('/newTest'); } else {
-      dispatch(setTestName(chosenTest));
-      history.push('/test');
+    if (chosenTest === 'newTest') {
+      history.push('/edit');
+    } else {
+      isEditMode
+        ? history.push(`/edit/${chosenTest.replace(/ /g, '_')}`)
+        : history.push(`/test/${chosenTest.replace(/ /g, '_')}`);
+      dispatch(setTestNameStore(chosenTest));
     }
+  };
+
+  const handleToggleEditMode = () => {
+    setIsEditMode(editMode => !editMode);
   };
 
   useEffect(() => {
@@ -46,43 +55,55 @@ export default function SelectionPage() {
       <div className={classes.mainScreenWrapper}>
         <Paper className={classes.mainScreenPaper}>
           <div className={classes.selectionWrapper}>
-            <FormControl
-              className={classes.testSelector}
-              disabled={!tests.length}
-            >
-              <InputLabel id='course-select-label'>{'Choose test'}</InputLabel>
-              <Select
-                value={chosenTest}
-                onChange={e => setChosenTest(e.target.value)}
-                defaultValue={'--- Create new Test ---'}
-                MenuProps={menuPropsObj}
-                inputProps={{
-                  name: 'test',
-                  id: 'test-simple',
-                }}
+            <div className={classes.topInputs}>
+              <FormControl
+                className={classes.testSelector}
+                disabled={!tests.length}
               >
-                <MenuItem
-                  value={'newTest'}
+                <InputLabel id='course-select-label'>{'Choose test'}</InputLabel>
+                <Select
+                  value={chosenTest}
+                  onChange={e => setChosenTest(e.target.value)}
+                  defaultValue={'--- Create new Test ---'}
+                  MenuProps={menuPropsObj}
+                  inputProps={{
+                    name: 'test',
+                    id: 'test-simple',
+                  }}
                 >
-                  {'--- Create new Test ---'}
-                </MenuItem>
-                {
-                  tests && tests
-                    .map(name => (
-                      <MenuItem
-                        key={name}
-                        value={name}
-                      >
-                        {name}
-                      </MenuItem>
-                    ))
-                }
-              </Select>
-            </FormControl>
+                  <MenuItem value={'newTest'}>
+                    {'--- Create new Test ---'}
+                  </MenuItem>
+                  {
+                    tests && tests
+                      .map(name => (
+                        <MenuItem
+                          key={name}
+                          value={name}
+                        >
+                          {name}
+                        </MenuItem>
+                      ))
+                  }
+                </Select>
+              </FormControl>
+              <FormControlLabel
+                className={classes.isEditCheckbox}
+                control={(
+                  <Checkbox
+                    checked={isEditMode}
+                    onChange={handleToggleEditMode}
+                    name='isEdit'
+                    color='primary'
+                  />
+                )}
+                label='Edit'
+              />
+            </div>
             <Button
               variant='contained'
               color='primary'
-              disabled={!chosenTest}
+              disabled={chosenTest === ''}
               onClick={handleSelectTest}
             >
               {'Select'}

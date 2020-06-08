@@ -17,15 +17,15 @@ export default function App() {
           component={SelectionPage}
         />
         <Route
-          path='/newTest/:testName?'
+          path='/edit/:testName?'
           component={NewTestCreator}
         />
         <Route
-          path='/test'
+          path='/test/:testName?'
           component={TestPage}
         />
         <Route
-          path='/results'
+          path='/results/:testName?'
           component={TestPage}
         />
       </Switch>

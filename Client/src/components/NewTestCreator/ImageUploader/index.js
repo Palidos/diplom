@@ -29,6 +29,16 @@ export default function ImageUploader({ setQuestionInfo, inputName }) {
       });
   };
 
+  // const handleChange = async newFilesArray => {
+  //   const file = newFilesArray[newFilesArray.length - 1];
+  //   const formData = new FormData();
+  //   formData.append('File', file);
+  //   setQuestionInfo(previousQuestionInfo => ({
+  //     ...previousQuestionInfo,
+  //     [inputName]: formData,
+  //   }));
+  // };
+
 
   return (
     <>
