@@ -14,9 +14,7 @@ export default function Layout({ children }) {
 
 
   useEffect(() => {
-    // history.push('/test');
     history.push('/main');
-    // history.push('/edit');
   }, [history]);
 
 

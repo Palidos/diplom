@@ -28,6 +28,10 @@ export default function App() {
           path='/results/:testName?'
           component={TestPage}
         />
+        <Route
+          path='/finalResults/:testName?'
+          component={TestPage}
+        />
       </Switch>
     </Layout>
   );
