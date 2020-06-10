@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import CircularProgress from 'components/CircularProgress';
 
@@ -15,6 +16,8 @@ export default function QuestionsArea() {
   const questions = useSelector(state => state.questions.questions);
   const isQuestionsLoaded = useSelector(state => state.questions.isQuestionsLoaded);
   const rightAnswers = useSelector(state => state.questions.rightAnswers);
+  const history = useHistory();
+  const pathname = history.location.pathname.split('/')[1];
 
   return (
     <>
@@ -22,8 +25,8 @@ export default function QuestionsArea() {
         className={classes.questionsArea}
         elevation={3}
       >
-        {
-          isQuestionsLoaded
+        {pathname !== 'finalResults'
+          ? isQuestionsLoaded
             ? questions
               .map((question, index) => (
                 <Question
@@ -35,7 +38,7 @@ export default function QuestionsArea() {
                 />
               ))
             : <CircularProgress />
-        }
+          : <div>{'finalResults'}</div>}
       </Paper>
     </>
   );

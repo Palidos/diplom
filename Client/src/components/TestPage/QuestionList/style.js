@@ -25,4 +25,9 @@ export default makeStyles(theme => ({
     marginTop: theme.spacing(1),
     width: '100%',
   },
+  stopButton: {
+    backgroundColor: '#fff',
+    marginTop: theme.spacing(1),
+    width: '100%',
+  },
 }));

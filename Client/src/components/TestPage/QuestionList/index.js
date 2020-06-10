@@ -59,14 +59,18 @@ export default function QuestionList() {
         questionLevel: option.correct ? option.questionLevel + 1 : option.questionLevel - 1,
       })),
     }));
-    history.push(`/test`);
+    history.push(`/test/${testName}`);
+  };
+
+  const handleStopTest = () => {
+    history.push(`/finalResults/${testName}`);
   };
 
   const handleCloseSubmitDialog = async e => {
     setIsSubmitDialogOpen(false);
     if (e.currentTarget.name === 'submit') {
       await dispatch(submitAnswers({ answers: answeredQuestions }));
-      history.push(`/results`);
+      history.push(`/results/${testName}`);
     }
   };
 
@@ -77,7 +81,7 @@ export default function QuestionList() {
 
   return (
     <>
-      <div>
+      <div style={{ width: 280 }}>
         <Paper
           className={classes.questionList}
           elevation={3}
@@ -91,7 +95,7 @@ export default function QuestionList() {
                     key={question._id}
                   >
                     <Link
-                      to={pathname === 'results' ? `/results/#q${question._id}` : `/test/#q${question._id}`}
+                      to={`${testName}/#q${question._id}`}
                       smooth
                       offset={50}
                       duration={500}
@@ -125,14 +129,23 @@ export default function QuestionList() {
               </Button>
             )
           ) : (
-            <Button
-              color='primary'
-              variant='contained'
-              className={classes.submitButton}
-              onClick={handleNextTest}
-            >
-              {'Proceed to the next test'}
-            </Button>
+            <>
+              <Button
+                color='primary'
+                variant='contained'
+                className={classes.submitButton}
+                onClick={handleNextTest}
+              >
+                {'Proceed to the next test'}
+              </Button>
+              <Button
+                variant='contained'
+                className={classes.stopButton}
+                onClick={handleStopTest}
+              >
+                {'Stop'}
+              </Button>
+            </>
           )
         }
       </div>

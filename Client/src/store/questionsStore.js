@@ -24,6 +24,7 @@ const initialState = {
   answeredQuestions: [],
   rightAnswers: [],
   submitLoaded: true,
+  statistics: [],
 };
 
 
@@ -81,10 +82,11 @@ export const reducer = (state = initialState, action) => {
         })),
       };
 
-    case SUBMIT_ANSWERS_ASYNC.PENDING: return {
-      ...state,
-      submitLoaded: false,
-    };
+    case SUBMIT_ANSWERS_ASYNC.PENDING:
+      return {
+        ...state,
+        submitLoaded: false,
+      };
 
     case SUBMIT_ANSWERS_ASYNC.SUCCESS:
       return {
@@ -92,6 +94,18 @@ export const reducer = (state = initialState, action) => {
         rightAnswers: action.payload,
         isQuestionsLoaded: true,
         submitLoaded: true,
+        statistics: action.payload.map(question => (!state.statistics.length
+          ? {
+            theme: question.theme,
+            maxQuestionLevel: question.correct ? question.questionLevel : null,
+          }
+          : {
+            ...state.statistics.find(stat => stat.theme === question.theme),
+            maxQuestionLevel: question.correct
+              ? question.questionLevel
+              : state.statistics.find(stat => stat.theme === question.theme).maxQuestionLevel,
+          }),
+        ),
       };
 
     case SET_TEST_NAME:
