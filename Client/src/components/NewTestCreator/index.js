@@ -68,7 +68,7 @@ export default function SelectionPage() {
   };
 
   const handleAddQuestion = () => {
-    addQuestion(JSON.stringify(questionInfo));
+    addQuestion({ questionInfo });
     setQuestionInfo(oldQuestionInfo => ({
       testName,
       questionType: oldQuestionInfo.questionType,
