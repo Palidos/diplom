@@ -29,17 +29,13 @@ router.get('/api/testList', async (req, res) => {
 });
 
 router.post('/api/addQuestion', async (req, res) => {
-  console.log(req.body);
-  const data = JSON.parse(req.body);
-  console.log(data);
-  // Questions.create(req.body.questionInfo, (err, result) => {
-  //   if (err) {
-  //     console.log(err);
-  //     return res.sendStatus(500);
-  //   }
-  return res.status(201).json({ msg: `Question added to test ` });
-  // return res.status(201).json({ msg: `Question added to test ${req.body.questionInfo.testName}` });
-  // });
+  Questions.create(req.body.questionInfo, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+    return res.status(201).json({ msg: `Question added to test ${req.body.questionInfo.testName}` });
+  });
 });
 
 router.post('/api/questions', async (req, res) => {
