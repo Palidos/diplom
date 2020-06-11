@@ -14,7 +14,10 @@ export default makeStyles(theme => ({
     margin: theme.spacing(2, 0),
     width: pathname === 'results' ? '100%' : '60%',
     '& .MuiTypography-root': { fontWeight: 500 },
-    '& .MuiOutlinedInput-input': { padding: theme.spacing(1) },
+    '& .MuiOutlinedInput-input': {
+      padding: theme.spacing(1),
+      width: '100%',
+    },
     '& fieldset': { borderColor: theme.palette.primary.main },
   }),
   answerImage: {

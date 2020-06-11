@@ -12,13 +12,13 @@ import useStyles from './style';
 
 // QuestionsArea component
 export default function QuestionsArea() {
-  const classes = useStyles();
   const questions = useSelector(state => state.questions.questions);
   const isQuestionsLoaded = useSelector(state => state.questions.isQuestionsLoaded);
   const rightAnswers = useSelector(state => state.questions.rightAnswers);
+  const statistics = useSelector(state => state.questions.statistics);
   const history = useHistory();
   const pathname = history.location.pathname.split('/')[1];
-
+  const classes = useStyles({ pathname });
   return (
     <>
       <Paper
@@ -38,7 +38,29 @@ export default function QuestionsArea() {
                 />
               ))
             : <CircularProgress />
-          : <div>{'finalResults'}</div>}
+          : (
+            <div className={classes.statisticsWrapper}>
+              <div className={classes.statisticsHeader}>
+                <div>{`Theme`}</div>
+                <div>{`Highest question level answered`}</div>
+              </div>
+              {statistics.map(stat => (
+                <div className={classes.statisticsItem}>
+                  <div className={classes.theme}>
+                    {stat.theme}
+                  </div>
+                  <div className={classes.maxQuestionLevel}>
+                    {
+                      stat.maxQuestionLevel === null
+                        ? 'No questions from that theme were answered correct'
+                        : stat.maxQuestionLevel
+                    }
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) }
+
       </Paper>
     </>
   );

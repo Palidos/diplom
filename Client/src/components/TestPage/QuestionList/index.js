@@ -81,74 +81,76 @@ export default function QuestionList() {
 
   return (
     <>
-      <div style={{ width: 280 }}>
-        <Paper
-          className={classes.questionList}
-          elevation={3}
-        >
-          {
-            isQuestionsLoaded
-              ? questions
-                .map((question, index) => (
-                  <div
-                    className={classes.questionButtonWrapper}
-                    key={question._id}
-                  >
-                    <Link
-                      to={`${testName}/#q${question._id}`}
-                      smooth
-                      offset={50}
-                      duration={500}
-                      className={classes.questionLink}
+      {pathname !== 'finalResults' && (
+        <div style={{ width: 280 }}>
+          <Paper
+            className={classes.questionList}
+            elevation={3}
+          >
+            {
+              isQuestionsLoaded
+                ? questions
+                  .map((question, index) => (
+                    <div
+                      className={classes.questionButtonWrapper}
+                      key={question._id}
                     >
-                      <Button
-                        variant='outlined'
-                        color='primary'
-                        className={classes.questionButton}
-                        style={{ backgroundColor: backgroundColor(question._id) }}
+                      <Link
+                        to={`${testName}/#q${question._id}`}
+                        smooth
+                        offset={50}
+                        duration={500}
+                        className={classes.questionLink}
                       >
-                        {index + 1}
-                      </Button>
-                    </Link>
-                  </div>
-                ))
-              : <CircularProgress />
-          }
-        </Paper>
-        {
-          pathname === 'test' ? (
-            submitLoaded && (
-              <Button
-                color='primary'
-                variant='contained'
-                className={classes.submitButton}
-                onClick={handleOpenSubmitDialog}
+                        <Button
+                          variant='outlined'
+                          color='primary'
+                          className={classes.questionButton}
+                          style={{ backgroundColor: backgroundColor(question._id) }}
+                        >
+                          {index + 1}
+                        </Button>
+                      </Link>
+                    </div>
+                  ))
+                : <CircularProgress />
+            }
+          </Paper>
+          {
+            pathname === 'test' ? (
+              submitLoaded && (
+                <Button
+                  color='primary'
+                  variant='contained'
+                  className={classes.submitButton}
+                  onClick={handleOpenSubmitDialog}
                 // disabled={isDisabled}
-              >
-                {'Submit'}
-              </Button>
+                >
+                  {'Submit'}
+                </Button>
+              )
+            ) : (
+              <>
+                <Button
+                  color='primary'
+                  variant='contained'
+                  className={classes.submitButton}
+                  onClick={handleNextTest}
+                >
+                  {'Proceed to the next test'}
+                </Button>
+                <Button
+                  variant='contained'
+                  className={classes.stopButton}
+                  onClick={handleStopTest}
+                >
+                  {'Stop'}
+                </Button>
+              </>
             )
-          ) : (
-            <>
-              <Button
-                color='primary'
-                variant='contained'
-                className={classes.submitButton}
-                onClick={handleNextTest}
-              >
-                {'Proceed to the next test'}
-              </Button>
-              <Button
-                variant='contained'
-                className={classes.stopButton}
-                onClick={handleStopTest}
-              >
-                {'Stop'}
-              </Button>
-            </>
-          )
-        }
-      </div>
+          }
+        </div>
+      )}
 
       <Dialog
         open={isSubmitDialogOpen}
