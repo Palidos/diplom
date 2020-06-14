@@ -40,7 +40,7 @@ export default function SelectionPage() {
 
   const handleCreateTest = () => {
     dispatch(setTestNameStore(testName));
-    history.push(`/edit/${testName.replace(/ /g, '_')}`);
+    history.push(`/edit/${testName.replace(/ /g, '-')}`);
   };
 
   const handleChangeQuestionTypeAndLevel = e => {

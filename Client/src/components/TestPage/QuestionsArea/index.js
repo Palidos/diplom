@@ -52,7 +52,7 @@ export default function QuestionsArea() {
                   <div className={classes.maxQuestionLevel}>
                     {
                       stat.maxQuestionLevel === null
-                        ? 'No questions from that theme were answered correct'
+                        ? 'No questions from that theme were answered correctly'
                         : stat.maxQuestionLevel
                     }
                   </div>
