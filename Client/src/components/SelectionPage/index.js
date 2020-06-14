@@ -25,9 +25,7 @@ export default function SelectionPage() {
     if (chosenTest === 'newTest') {
       history.push('/edit');
     } else {
-      isEditMode
-        ? history.push(`/edit/${chosenTest.replace(/ /g, '_')}`)
-        : history.push(`/test/${chosenTest.replace(/ /g, '_')}`);
+      history.push(`/${isEditMode ? 'edit' : 'test'}/${chosenTest.replace(/ /g, '-')}`);
       dispatch(setTestNameStore(chosenTest));
     }
   };
