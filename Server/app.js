@@ -7,7 +7,6 @@ require('dotenv').config();
 const routes = require('./routes/routes');
 
 const URI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0-c6g2m.mongodb.net/${process.env.DB_COLLECTION}?retryWrites=true&w=majority`;
-// const URI = `mongodb+srv://SmartTestsAdmin:w6UBWZJ21uO483Lf@cluster0-c6g2m.mongodb.net/SmartTests?retryWrites=true&w=majority`;
 const PORT = process.env.PORT || 8080;
 
 const app = express();
